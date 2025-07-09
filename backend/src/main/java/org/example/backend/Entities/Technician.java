@@ -6,10 +6,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @DiscriminatorValue(value = "TECHNICIAN")
 @Entity
-@Data @AllArgsConstructor @NoArgsConstructor @Builder
+@Data @AllArgsConstructor @NoArgsConstructor @SuperBuilder
 public class Technician extends User {
     private String speciality;
 }

@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.example.backend.Enums.Role;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -14,9 +14,10 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
-@AllArgsConstructor @NoArgsConstructor @Builder
+@AllArgsConstructor @NoArgsConstructor @SuperBuilder
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "ROLE" , length = 20)
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
 public class User {
 
     @Id
@@ -27,8 +28,6 @@ public class User {
 
     private String lastName;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
 
     private String email;
 
@@ -37,6 +36,12 @@ public class User {
     private String phoneNumber;
 
     private LocalDate birthDate;
+
+    @Transient
+    public String getRole() {
+        DiscriminatorValue dv = this.getClass().getAnnotation(DiscriminatorValue.class);
+        return dv.value();
+    }
 
     @CreationTimestamp
     private LocalDateTime createdAt;
