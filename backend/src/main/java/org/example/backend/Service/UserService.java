@@ -1,11 +1,25 @@
 package org.example.backend.Service;
 
-import org.example.backend.DTO.UserInsertionDTO;
-import org.example.backend.DTO.UserRetrievalDTO;
-import org.example.backend.Entities.User;
+import org.example.backend.DTO.User.Insertion.SuperUserInsertionDTO;
+import org.example.backend.DTO.User.Insertion.TechnicianInsertionDTO;
+import org.example.backend.DTO.User.Insertion.UserInsertionDTO;
+import org.example.backend.DTO.User.Retrieval.SuperUserRetrievalDTO;
+import org.example.backend.DTO.User.Retrieval.SupervisorRetrievalDTO;
+import org.example.backend.DTO.User.Retrieval.TechnicianRetrievalDTO;
+import org.example.backend.DTO.User.Retrieval.UserRetrievalDTO;
 
 public interface UserService {
     UserRetrievalDTO getUserById(Integer id);
 
-    UserRetrievalDTO createUser(UserInsertionDTO userInsertionDTO);
+    SuperUserRetrievalDTO createSuperUser(SuperUserInsertionDTO superUserInsertionDTO);
+
+    SupervisorRetrievalDTO createSupervisor(SupervisorRetrievalDTO supervisorRetrievalDTO);
+
+    TechnicianRetrievalDTO createTechnician(TechnicianInsertionDTO technicianInsertionDTO);
+
+    SuperUserRetrievalDTO getSuperUserById(Integer id);
+
+    SupervisorRetrievalDTO getSupervisorById(Integer id);
+
+    TechnicianRetrievalDTO getTechnicianById(Integer id);
 }

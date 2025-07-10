@@ -1,9 +1,7 @@
 package org.example.backend.Entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,6 +10,9 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -26,9 +27,32 @@ public class Exportation {
     private LocalDate endDate;
     private String fileName;
     private String fileLink;
+
+    @ManyToMany
+    @JoinTable(
+            name = "exportation_technician",
+            joinColumns = @JoinColumn(name = "exportation_id"),
+            inverseJoinColumns = @JoinColumn(name = "technician_id")
+    )
+    private List<Technician> technicians = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "exportation_intervention",
+            joinColumns = @JoinColumn(name = "exportation_id"),
+            inverseJoinColumns = @JoinColumn(name = "intervention_id")
+    )
+    private List<Intervention> interventions = new ArrayList<>();
+
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "created_by_id")
+    private User exportationCreatedBy;
+
     @CreationTimestamp
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
+
     @UpdateTimestamp
-    private LocalDate updatedAt;
+    private LocalDateTime updatedAt;
 
 }

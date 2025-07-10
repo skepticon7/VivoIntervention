@@ -1,8 +1,13 @@
 package org.example.backend.ServiceImplementation;
 
 import lombok.AllArgsConstructor;
-import org.example.backend.DTO.UserInsertionDTO;
-import org.example.backend.DTO.UserRetrievalDTO;
+import org.example.backend.DTO.User.Insertion.SuperUserInsertionDTO;
+import org.example.backend.DTO.User.Insertion.TechnicianInsertionDTO;
+import org.example.backend.DTO.User.Insertion.UserInsertionDTO;
+import org.example.backend.DTO.User.Retrieval.SuperUserRetrievalDTO;
+import org.example.backend.DTO.User.Retrieval.SupervisorRetrievalDTO;
+import org.example.backend.DTO.User.Retrieval.TechnicianRetrievalDTO;
+import org.example.backend.DTO.User.Retrieval.UserRetrievalDTO;
 import org.example.backend.Entities.User;
 import org.example.backend.Exceptions.AlreadyExistsException;
 import org.example.backend.Exceptions.NotFoundException;
@@ -21,19 +26,39 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public UserRetrievalDTO getUserById(Integer id) {
-        return UserDtoMapper.toDto(userRepository.findUserById(id)
-                .orElseThrow(() -> new NotFoundException(String.format("User with id %d not found", id))));
+
     }
 
     @Override
-    public UserRetrievalDTO createUser(UserInsertionDTO userInsertionDTO){
-        Optional<User> user = userRepository.findUserByEmail(userInsertionDTO.getEmail());
-        if(user.isPresent()){
-            throw new AlreadyExistsException(String.format("User with email %s already exists", userInsertionDTO.getEmail()));
-        }
+    public SuperUserRetrievalDTO createSuperUser(SuperUserInsertionDTO superUserInsertionDTO) {
+        Optional<User> user = userRepository.findUserByEmail(superUserInsertionDTO.getEmail());
+        if(user.isPresent())
+            throw new AlreadyExistsException(String.format("User with email %s already exists", superUserInsertionDTO.getEmail()));
 
-        return UserDtoMapper.toDto(userRepository.save(
-                UserDtoMapper.toEntity(userInsertionDTO)
-        ));
+    }
+
+    @Override
+    public SupervisorRetrievalDTO createSupervisor(SupervisorRetrievalDTO supervisorRetrievalDTO) {
+        return null;
+    }
+
+    @Override
+    public TechnicianRetrievalDTO createTechnician(TechnicianInsertionDTO technicianInsertionDTO) {
+        return null;
+    }
+
+    @Override
+    public SuperUserRetrievalDTO getSuperUserById(Integer id) {
+        return null;
+    }
+
+    @Override
+    public SupervisorRetrievalDTO getSupervisorById(Integer id) {
+        return null;
+    }
+
+    @Override
+    public TechnicianRetrievalDTO getTechnicianById(Integer id) {
+        return null;
     }
 }

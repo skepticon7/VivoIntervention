@@ -1,16 +1,30 @@
 package org.example.backend.Entities;
 
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.example.backend.Enums.Specialization;
+import org.example.backend.Enums.TechnicianStatus;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @DiscriminatorValue(value = "SUPERVISOR")
 @Entity
 @Data
 @NoArgsConstructor @SuperBuilder
 public class Supervisor extends User{
+
+    @Enumerated(EnumType.STRING)
+    private Specialization speciality;
+
+    @Enumerated(EnumType.STRING)
+    private TechnicianStatus technicianStatus;
+
+    @OneToMany(mappedBy = "supervisor")
+    private List<Technician> team = new ArrayList<>();
 
 }
