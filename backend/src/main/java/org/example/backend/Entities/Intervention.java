@@ -22,6 +22,7 @@ public class Intervention {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private String code;
     private String comment;
     private LocalDateTime startTime;
     private LocalDateTime endTime;

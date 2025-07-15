@@ -8,7 +8,7 @@ public class SuperUserDtoMapper {
     public static SuperUserRetrievalDTO toDto(SuperUser superUser) {
         if(superUser == null) return null;
         return SuperUserRetrievalDTO.builder()
-                .fullName(superUser.getFullName())
+                .fullName(superUser.getFirstName().concat(" ").concat(superUser.getLastName()))
                 .id(superUser.getId())
                 .phoneNumber(superUser.getPhoneNumber())
                 .role(superUser.getRole())
@@ -21,9 +21,11 @@ public class SuperUserDtoMapper {
     public static SuperUser toEntity(SuperUserInsertionDTO superUserInsertionDTO){
         if(superUserInsertionDTO == null) return null;
         return SuperUser.builder()
-                .fullName(superUserInsertionDTO.getFullName())
+                .firstName(superUserInsertionDTO.getFirstName())
+                .lastName(superUserInsertionDTO.getLastName())
                 .email(superUserInsertionDTO.getEmail())
                 .phoneNumber(superUserInsertionDTO.getPhoneNumber())
+                .password(superUserInsertionDTO.getPassword())
                 .userCreatedBy(null)
                 .build();
     }

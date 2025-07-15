@@ -5,9 +5,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Data @AllArgsConstructor @NoArgsConstructor @SuperBuilder
 public class UserInsertionDTO {
-    private String fullName;
+    private String firstName;
+    private String lastName;
     private String email;
     private String phoneNumber;
     private String password;

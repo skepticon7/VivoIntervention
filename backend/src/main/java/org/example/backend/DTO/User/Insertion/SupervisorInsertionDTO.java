@@ -5,12 +5,18 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+import org.modelmapper.internal.bytebuddy.implementation.bind.annotation.Super;
 
-@Data @Builder @AllArgsConstructor @NoArgsConstructor
+import java.time.LocalDate;
+import java.util.List;
+
+@Data @SuperBuilder
+@AllArgsConstructor @NoArgsConstructor
 public class SupervisorInsertionDTO extends UserInsertionDTO {
     private Integer mainSite;
-    @Size(min = 3, max = 50, message = "Name must be between 3 and 50 characters")
-    private String speciality;
+    private List<Integer> specialities;
     private String technicianStatus;
     private Integer createdBy;
+    private LocalDate hireDate;
 }

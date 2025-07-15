@@ -14,9 +14,11 @@ public class SiteInsertionDTO {
     private String siteCode;
     private String siteStatus;
     private String siteAdresse;
+    private String siteLocation;
     private String email;
     private String phoneNumber;
-    private Integer supervisor;
+    private Integer createdById;
+    private Integer supervisorId;
     private LocalTime startOperatingHour;
     private LocalTime endOperatingHour;
 }

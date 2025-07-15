@@ -27,6 +27,7 @@ public class Site {
     private Integer id;
     private String siteName;
     private String siteCode;
+    private String siteLocation;
     private SiteStatus siteStatus;
     private String siteAdresse;
     private String email;
@@ -34,7 +35,7 @@ public class Site {
     private LocalTime startOperatingHour;
     private LocalTime endOperatingHour;
 
-    @OneToOne(optional = false)
+    @OneToOne(mappedBy = "mainSite")
     @JoinColumn(name = "supervisor_id", referencedColumnName = "id")
     private Supervisor supervisor;
 
@@ -43,10 +44,11 @@ public class Site {
 
     @OneToMany(mappedBy = "mainSite")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private List<User> technicians = new ArrayList<>();
+    private List<Technician> technicians = new ArrayList<>();
 
-
-
+    @ManyToOne
+    @JoinColumn(name = "created_by_id", referencedColumnName = "id")
+    private SuperUser createdBy;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

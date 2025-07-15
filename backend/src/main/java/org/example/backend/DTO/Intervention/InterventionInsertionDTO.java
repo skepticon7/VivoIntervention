@@ -13,6 +13,7 @@ import java.time.LocalTime;
 public class InterventionInsertionDTO {
     private LocalDateTime startDate;
     private Integer site;
+    private String code;
     private String interventionStatus;
     private String interventionType;
     private String interventionPriority;

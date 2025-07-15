@@ -9,28 +9,35 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-@AllArgsConstructor
 @Entity
-@NoArgsConstructor
-@Builder
-@Data
-public class InterventionType {
+@Data @NoArgsConstructor @AllArgsConstructor @Builder
+public class Speciality {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String interventionName;
+
+    private String name;
+
     private String description;
 
-    @ManyToOne
+    @ManyToMany
+    @JoinTable(
+            name = "speciality_users",
+            joinColumns = @JoinColumn(name = "speciality_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private List<User> users;
+
+
+    @ManyToOne(optional = false)
     @JoinColumn(name = "created_by_id", referencedColumnName = "id")
     private SuperUser createdBy;
 
-
     @CreationTimestamp
     private LocalDateTime createdAt;
+
     @UpdateTimestamp
     private LocalDateTime updatedAt;
-
-
 }

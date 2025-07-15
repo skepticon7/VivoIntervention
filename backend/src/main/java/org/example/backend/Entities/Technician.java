@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.example.backend.Enums.TechnicianStatus;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,11 +18,24 @@ import java.util.List;
 @Data @AllArgsConstructor @NoArgsConstructor @SuperBuilder
 public class Technician extends User {
 
-    private String speciality;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "supervisor_id")
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "supervisor_id" , nullable = true)
     private Supervisor supervisor;
+
+    @ManyToOne
+    @JoinColumn(name = "site_id", referencedColumnName = "id")
+    private Site mainSite;
+
+    @OneToMany(mappedBy = "interventionCreatedBy")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private List<Intervention> createdInterventions = new ArrayList<>();
+
+    @ManyToMany
+    private List<Speciality> specialities = new ArrayList<>();
+
+    private LocalDate hireDate;
+
 
     @ManyToMany
     @JoinTable(
@@ -30,6 +44,7 @@ public class Technician extends User {
             inverseJoinColumns = @JoinColumn(name = "site_id")
     )
     private List<Site> assignedSites = new ArrayList<>();
+
 
     private TechnicianStatus technicianStatus;
 

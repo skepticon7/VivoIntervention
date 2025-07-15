@@ -29,7 +29,9 @@ public abstract class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String fullName;
+    private String firstName;
+
+    private String lastName;
 
     private String email;
 
@@ -37,13 +39,9 @@ public abstract class User {
 
     private String phoneNumber;
 
-    @ManyToOne
-    @JoinColumn(name = "site_id", referencedColumnName = "id")
-    private Site mainSite;
-
 
     @ManyToOne
-    @JoinColumn(name = "created_by" , referencedColumnName = "id")
+    @JoinColumn(name = "created_by_id", referencedColumnName = "id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private User userCreatedBy;
 
@@ -51,20 +49,6 @@ public abstract class User {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<User> createdUsers = new ArrayList<>();
 
-    @OneToMany(mappedBy = "exportationCreatedBy")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private List<Exportation> exportations = new ArrayList<>();
-
-    @OneToMany(mappedBy = "reportCreatedBy")
-    private List<Report> reports = new ArrayList<>();
-
-    @OneToMany(mappedBy = "interventionCreatedBy")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private List<Intervention> createdInterventions = new ArrayList<>();
-
-    @OneToMany(mappedBy = "interventionAssignedTo")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private List<Intervention> assignedInterventions = new ArrayList<>();
 
     @Transient
     public String getRole() {

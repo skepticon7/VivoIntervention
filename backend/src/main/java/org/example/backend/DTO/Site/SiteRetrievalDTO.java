@@ -13,6 +13,7 @@ public class SiteRetrievalDTO {
     private String siteName;
     private String siteCode;
     private String siteStatus;
+    private String siteLocation;
     private String siteAdresse;
     private String email;
     private String phoneNumber;

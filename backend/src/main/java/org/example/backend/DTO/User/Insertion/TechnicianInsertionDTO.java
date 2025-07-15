@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Data @AllArgsConstructor @NoArgsConstructor @SuperBuilder
@@ -13,5 +14,6 @@ public class TechnicianInsertionDTO extends UserInsertionDTO{
     private String technicianStatus;
     private Integer supervisor;
     private List<Integer> assignedSites;
+    private LocalDate hireDate;
     private Integer createdBy;
 }

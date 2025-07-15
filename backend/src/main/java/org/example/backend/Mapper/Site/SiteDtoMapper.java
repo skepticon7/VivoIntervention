@@ -6,12 +6,19 @@ import org.example.backend.Entities.Site;
 import org.example.backend.Enums.SiteStatus;
 import org.example.backend.Mapper.User.SupervisorDtoMapper;
 
+import java.util.ArrayList;
+
 public class SiteDtoMapper {
     public static Site toEntity(SiteInsertionDTO siteInsertionDTO){
         if(siteInsertionDTO == null) return null;
         return Site.builder()
                 .siteAdresse(siteInsertionDTO.getSiteAdresse())
                 .siteName(siteInsertionDTO.getSiteName())
+                .siteLocation(siteInsertionDTO.getSiteLocation())
+                .email(siteInsertionDTO.getEmail())
+                .phoneNumber(siteInsertionDTO.getPhoneNumber())
+                .interventions(new ArrayList<>())
+                .technicians(new ArrayList<>())
                 .siteCode(siteInsertionDTO.getSiteCode())
                 .siteStatus(SiteStatus.valueOf(siteInsertionDTO.getSiteStatus()))
                 .startOperatingHour(siteInsertionDTO.getStartOperatingHour())
@@ -27,11 +34,12 @@ public class SiteDtoMapper {
                 .siteName(site.getSiteName())
                 .siteCode(site.getSiteCode())
                 .siteStatus(site.getSiteStatus().name())
+                .siteLocation(site.getSiteLocation())
                 .startOperatingHour(site.getStartOperatingHour())
                 .endOperatingHour(site.getEndOperatingHour())
                 .email(site.getEmail())
                 .phoneNumber(site.getPhoneNumber())
-                .supervisor(site.getSupervisor().getFullName())
+                .supervisor(site.getSupervisor() == null ? null : site.getSupervisor().getFirstName().concat(" ").concat(site.getSupervisor().getLastName()))
                 .interventionsMade(site.getInterventions().size())
                 .techniciansAssigned(site.getTechnicians().size())
                 .id(site.getId())
