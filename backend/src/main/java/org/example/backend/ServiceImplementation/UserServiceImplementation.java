@@ -11,7 +11,6 @@ import org.example.backend.DTO.User.Retrieval.UserRetrievalDTO;
 import org.example.backend.Entities.User;
 import org.example.backend.Exceptions.AlreadyExistsException;
 import org.example.backend.Exceptions.NotFoundException;
-import org.example.backend.Mapper.UserDtoMapper;
 import org.example.backend.Repository.UserRepository;
 import org.example.backend.Service.UserService;
 import org.springframework.stereotype.Service;
@@ -26,7 +25,7 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public UserRetrievalDTO getUserById(Integer id) {
-
+        return null;
     }
 
     @Override
@@ -34,7 +33,7 @@ public class UserServiceImplementation implements UserService {
         Optional<User> user = userRepository.findUserByEmail(superUserInsertionDTO.getEmail());
         if(user.isPresent())
             throw new AlreadyExistsException(String.format("User with email %s already exists", superUserInsertionDTO.getEmail()));
-
+        return null;
     }
 
     @Override

@@ -35,7 +35,7 @@ public class Report {
             joinColumns = @JoinColumn(name = "report_id"),
             inverseJoinColumns = @JoinColumn(name = "technician_id")
     )
-    private List<Technician> technicians = new ArrayList<>();
+    private List<User> technicians = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
