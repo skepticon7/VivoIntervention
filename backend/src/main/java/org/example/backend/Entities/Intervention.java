@@ -28,6 +28,10 @@ public class Intervention {
     private InterventionPriority interventionPriority;
     private InterventionStatus interventionStatus;
 
+    @ManyToOne
+    @JoinColumn(name = "site_id")
+    private Site site;
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "created_by_id")
     private User interventionCreatedBy;

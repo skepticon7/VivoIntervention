@@ -1,6 +1,7 @@
 package org.example.backend.Service;
 
 import org.example.backend.DTO.User.Insertion.SuperUserInsertionDTO;
+import org.example.backend.DTO.User.Insertion.SupervisorInsertionDTO;
 import org.example.backend.DTO.User.Insertion.TechnicianInsertionDTO;
 import org.example.backend.DTO.User.Insertion.UserInsertionDTO;
 import org.example.backend.DTO.User.Retrieval.SuperUserRetrievalDTO;
@@ -13,9 +14,6 @@ public interface UserService {
 
     SuperUserRetrievalDTO createSuperUser(SuperUserInsertionDTO superUserInsertionDTO);
 
-    SupervisorRetrievalDTO createSupervisor(SupervisorRetrievalDTO supervisorRetrievalDTO);
-
-    TechnicianRetrievalDTO createTechnician(TechnicianInsertionDTO technicianInsertionDTO);
 
     SuperUserRetrievalDTO getSuperUserById(Integer id);
 
