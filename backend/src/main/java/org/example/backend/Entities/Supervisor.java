@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.example.backend.Enums.TechnicianStatus;
 
+import java.lang.invoke.CallSite;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,33 +18,22 @@ import java.util.List;
 @NoArgsConstructor @SuperBuilder
 public class Supervisor extends User{
 
-    @OneToOne
-    @JoinColumn(name = "site_id", referencedColumnName = "id")
-    private Site mainSite;
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "supervisor_technician",
+            joinColumns = @JoinColumn(name = "supervisor_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "technician_id", referencedColumnName = "id")
+    )
+    private List<Technician> technicians;
 
-    @Enumerated(EnumType.STRING)
-    private TechnicianStatus technicianStatus;
 
-    @ManyToMany
-    private List<Speciality> specialities = new ArrayList<>();
+    @OneToMany(mappedBy = "createdBySupervisor" , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Technician> techniciansCreated;
 
-    @OneToMany(mappedBy = "supervisor")
-    private List<Technician> team = new ArrayList<>();
+    @OneToMany(mappedBy = "createdBySupervisor" , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Exportation> exportationsCreated;
 
-    @OneToMany(mappedBy = "interventionCreatedBy")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private List<Intervention> createdInterventions = new ArrayList<>();
-
-    @OneToMany(mappedBy = "interventionAssignedTo")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private List<Intervention> assignedInterventions = new ArrayList<>();
-
-    @OneToMany(mappedBy = "exportationCreatedBy")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private List<Exportation> exportations = new ArrayList<>();
-
-    @OneToMany(mappedBy = "reportCreatedBy")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private List<Report> reports = new ArrayList<>();
+    @OneToMany(mappedBy = "createdBySupervisor" , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Report> reportsCreated;
 
 }

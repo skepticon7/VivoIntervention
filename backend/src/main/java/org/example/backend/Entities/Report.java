@@ -25,25 +25,19 @@ public class Report {
     private String pdfName;
     private String pdfLink;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "created_by_id")
-    private User reportCreatedBy;
+    @ManyToOne
+    @JoinColumn(name = "createdBySuperuser")
+    private SuperUser createdBySuperuser;
 
-    @ManyToMany
-    @JoinTable(
-            name = "report_technician",
-            joinColumns = @JoinColumn(name = "report_id"),
-            inverseJoinColumns = @JoinColumn(name = "technician_id")
-    )
-    private List<User> technicians = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "createdBySupervisor")
+    private Supervisor createdBySupervisor;
 
-    @ManyToMany
-    @JoinTable(
-            name = "report_intervention",
-            joinColumns = @JoinColumn(name = "report_id"),
-            inverseJoinColumns = @JoinColumn(name = "intervention_id")
-    )
-    private List<Intervention> interventions = new ArrayList<>();
+    @ManyToMany(mappedBy = "reportsConcerned")
+    private List<User> supervisors_technicians;
+
+    @ManyToMany(mappedBy = "reports")
+    private List<Intervention> interventions;
 
 
     @CreationTimestamp

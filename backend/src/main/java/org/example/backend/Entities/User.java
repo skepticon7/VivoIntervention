@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.aspectj.apache.bcel.classfile.Module;
+import org.example.backend.Enums.TechnicianStatus;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -28,27 +30,63 @@ public abstract class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     private String firstName;
-
     private String lastName;
-
     private String email;
-
     private String password;
-
     private String phoneNumber;
+    private LocalDate hireDate;
 
+    @Enumerated(EnumType.STRING)
+    private TechnicianStatus technicianStatus;
 
     @ManyToOne
-    @JoinColumn(name = "created_by_id", referencedColumnName = "id")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private User userCreatedBy;
+    private SuperUser createdBySuperuser;
 
-    @OneToMany(mappedBy = "userCreatedBy")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private List<User> createdUsers = new ArrayList<>();
+    @ManyToOne
+    private Supervisor createdBySupervisor;
 
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "user_interventionType",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "interventionType_id")
+    )
+    private List<InterventionType> interventionTypes;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "user_site",
+            joinColumns = @JoinColumn(name = "user_id" , referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "site_id", referencedColumnName = "id")
+    )
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private List<Site> sites;
+
+    @OneToMany(mappedBy = "assignedTo" , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private List<Intervention> interventionsAssigned;
+
+    @OneToMany(mappedBy = "createdBySupervisor_technician" , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Intervention> interventionsCreated;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "user_exportation",
+            joinColumns = @JoinColumn(name = "user_id" , referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "exportation_id", referencedColumnName = "id")
+    )
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private List<Exportation> exportationsConcerned;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "user_report",
+            joinColumns = @JoinColumn(name = "user_id" , referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "report_id", referencedColumnName = "id")
+    )
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private List<Report> reportsConcerned;
 
     @Transient
     public String getRole() {

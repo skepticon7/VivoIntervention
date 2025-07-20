@@ -17,35 +17,6 @@ import java.util.List;
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor @SuperBuilder
 public class Technician extends User {
-
-
-    @ManyToOne(optional = true)
-    @JoinColumn(name = "supervisor_id" , nullable = true)
-    private Supervisor supervisor;
-
-    @ManyToOne
-    @JoinColumn(name = "site_id", referencedColumnName = "id")
-    private Site mainSite;
-
-    @OneToMany(mappedBy = "interventionCreatedBy")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private List<Intervention> createdInterventions = new ArrayList<>();
-
-    @ManyToMany
-    private List<Speciality> specialities = new ArrayList<>();
-
-    private LocalDate hireDate;
-
-
-    @ManyToMany
-    @JoinTable(
-            name = "technician_assigned_sites",
-            joinColumns = @JoinColumn(name = "technician_id"),
-            inverseJoinColumns = @JoinColumn(name = "site_id")
-    )
-    private List<Site> assignedSites = new ArrayList<>();
-
-
-    private TechnicianStatus technicianStatus;
-
+    @ManyToMany(mappedBy = "technicians")
+    private List<Supervisor> supervisors;
 }

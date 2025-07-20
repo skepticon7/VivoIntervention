@@ -1,44 +1,64 @@
 package org.example.backend.Entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@DiscriminatorValue(value = "SUPER_USER")
 @Entity
 @Data
 @NoArgsConstructor
-@SuperBuilder
-public class SuperUser extends User {
+@AllArgsConstructor
+@Builder
+public class SuperUser{
 
-    @OneToMany(mappedBy = "createdBy")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    private String firstName;
+
+    private String lastName;
+
+    private String email;
+
+    private String password;
+
+    private String phoneNumber;
+
+    @OneToMany(mappedBy = "createdBySuperuser" , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    List<Site> sites = new ArrayList<>();
+    private List<Site> sites;
 
+    @OneToMany(mappedBy = "createdBySuperuser" , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Intervention> interventions;
 
-    @OneToMany(mappedBy = "createdBy")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY )
+    @OneToMany(mappedBy = "createdBySuperuser" , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<InterventionType> interventionTypes;
+
+    @OneToMany(mappedBy = "createdBySuperuser" , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    List<Speciality> specialities = new ArrayList<>();
+    private List<Exportation> exportations;
 
+    @OneToMany(mappedBy = "createdBySuperuser" , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(mappedBy = "createdBy")
-    List<InterventionType> interventionTypes = new ArrayList<>();
+    private List<Report> reports;
 
-
-    @OneToMany(mappedBy = "exportationCreatedBy")
+    @OneToMany(mappedBy = "createdBySuperuser" , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private List<Exportation> exportations = new ArrayList<>();
+    private List<User> users;
 
-    @OneToMany(mappedBy = "reportCreatedBy")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private List<Report> reports = new ArrayList<>();
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
+
 }

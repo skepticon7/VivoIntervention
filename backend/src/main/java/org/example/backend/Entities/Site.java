@@ -20,6 +20,13 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Builder
+@Table(
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "siteName"),
+                @UniqueConstraint(columnNames = "siteCode")
+        }
+)
+
 public class Site {
 
     @Id
@@ -28,6 +35,7 @@ public class Site {
     private String siteName;
     private String siteCode;
     private String siteLocation;
+    @Enumerated(EnumType.STRING)
     private SiteStatus siteStatus;
     private String siteAdresse;
     private String email;
@@ -35,20 +43,27 @@ public class Site {
     private LocalTime startOperatingHour;
     private LocalTime endOperatingHour;
 
-    @OneToOne(mappedBy = "mainSite")
-    @JoinColumn(name = "supervisor_id", referencedColumnName = "id")
-    private Supervisor supervisor;
+    @OneToMany(mappedBy = "site" , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Intervention> interventions;
 
-    @OneToMany(mappedBy = "site")
-    private List<Intervention> interventions = new ArrayList<>();
-
-    @OneToMany(mappedBy = "mainSite")
+    @ManyToMany(mappedBy = "sites")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private List<Technician> technicians = new ArrayList<>();
+    private List<User> supervisors_technicians;
+
+    @ManyToMany(mappedBy = "sites")
+    private List<Exportation> exportationsConcerned;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "site_report",
+            joinColumns = @JoinColumn(name = "site_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "report_id", referencedColumnName = "id")
+    )
+    private List<Report> reportsConcerned;
 
     @ManyToOne
     @JoinColumn(name = "created_by_id", referencedColumnName = "id")
-    private SuperUser createdBy;
+    private SuperUser createdBySuperuser;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

@@ -9,13 +9,16 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @AllArgsConstructor
 @Entity
 @NoArgsConstructor
 @Builder
 @Data
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"interventionName"}))
 public class InterventionType {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -24,13 +27,14 @@ public class InterventionType {
 
     @ManyToOne
     @JoinColumn(name = "created_by_id", referencedColumnName = "id")
-    private SuperUser createdBy;
+    private SuperUser createdBySuperuser;
 
+    @ManyToMany(mappedBy = "interventionTypes", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<User> supervisors_technicians;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
     @UpdateTimestamp
     private LocalDateTime updatedAt;
-
 
 }

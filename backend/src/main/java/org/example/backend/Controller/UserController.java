@@ -2,11 +2,8 @@ package org.example.backend.Controller;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.example.backend.DTO.User.Insertion.SuperUserInsertionDTO;
-import org.example.backend.DTO.User.Insertion.SupervisorInsertionDTO;
 import org.example.backend.DTO.User.Insertion.TechnicianInsertionDTO;
 import org.example.backend.DTO.User.Insertion.UserInsertionDTO;
-import org.example.backend.DTO.User.Retrieval.SuperUserRetrievalDTO;
 import org.example.backend.DTO.User.Retrieval.SupervisorRetrievalDTO;
 import org.example.backend.DTO.User.Retrieval.TechnicianRetrievalDTO;
 import org.example.backend.DTO.User.Retrieval.UserRetrievalDTO;
@@ -21,23 +18,54 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class UserController {
 
-    private  UserService userService;
+    private final UserService userService;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserRetrievalDTO> getUserById(@PathVariable("id") Integer id){
-        UserRetrievalDTO userDTO = userService.getUserById(id);
-        return new ResponseEntity<>(userDTO , HttpStatus.OK);
+    @GetMapping("/supervisor/{id}")
+    public ResponseEntity<SupervisorRetrievalDTO> getSupervisorById(@PathVariable("id") Integer id){
+        SupervisorRetrievalDTO user = userService.getSupervisorById(id);
+        return new ResponseEntity<>(user , HttpStatus.OK);
     }
 
-    //default use case
-    @PostMapping("/createSuperAdmin")
-    public ResponseEntity<SuperUserRetrievalDTO> createSuperAdmin(@Valid @RequestBody SuperUserInsertionDTO superUserInsertionDTO){
-        SuperUserRetrievalDTO superUserRetrievalDTO = userService.createSuperUser(superUserInsertionDTO);
-        return new ResponseEntity<>(superUserRetrievalDTO , HttpStatus.CREATED);
+    @GetMapping("/technician/{id}")
+    public ResponseEntity<TechnicianRetrievalDTO> getTechnicianById(@PathVariable("id") Integer id){
+        TechnicianRetrievalDTO user = userService.getTechnicianById(id);
+        return new ResponseEntity<>(user , HttpStatus.OK);
     }
 
+    @PostMapping("/createSupervisor")
+    public ResponseEntity<SupervisorRetrievalDTO> createSupervisor(@Valid @RequestBody UserInsertionDTO userInsertionDTO){
+        SupervisorRetrievalDTO supervisorRetrievalDTO = userService.createSupervisor(userInsertionDTO);
+        return new ResponseEntity<>(supervisorRetrievalDTO , HttpStatus.CREATED);
+    }
 
+    @PostMapping("/createTechnician")
+    public ResponseEntity<TechnicianRetrievalDTO> createTechnician(@Valid @RequestBody TechnicianInsertionDTO technicianInsertionDTO){
+        TechnicianRetrievalDTO technicianRetrievalDTO = userService.createTechnician(technicianInsertionDTO);
+        return new ResponseEntity<>(technicianRetrievalDTO , HttpStatus.CREATED);
+    }
 
+    @DeleteMapping("/deleteTechnician/{id}")
+    public ResponseEntity<TechnicianRetrievalDTO> deleteTechnician(@PathVariable("id") Integer id) {
+        TechnicianRetrievalDTO technicianRetrievalDTO = userService.deleteTechnician(id);
+        return new ResponseEntity<>(technicianRetrievalDTO, HttpStatus.OK);
+    }
 
+    @DeleteMapping("/deleteSupervisor/{id}")
+    public ResponseEntity<SupervisorRetrievalDTO> deleteSupervisor(@PathVariable("id") Integer id) {
+        SupervisorRetrievalDTO supervisorRetrievalDTO = userService.deleteSupervisor(id);
+        return new ResponseEntity<>(supervisorRetrievalDTO, HttpStatus.OK);
+    }
+
+    @PatchMapping("/updateSupervisor/{id}")
+    public ResponseEntity<SupervisorRetrievalDTO> updateSupervisor(@PathVariable("id") Integer id, @Valid @RequestBody UserInsertionDTO userInsertionDTO) {
+        SupervisorRetrievalDTO supervisorRetrievalDTO = userService.updateSupervisor(id, userInsertionDTO);
+        return new ResponseEntity<>(supervisorRetrievalDTO, HttpStatus.OK);
+    }
+
+    @PatchMapping("/updateTechnician/{id}")
+    public ResponseEntity<TechnicianRetrievalDTO> updateTechnician(@PathVariable("id") Integer id , @Valid @RequestBody TechnicianInsertionDTO technicianInsertionDTO) {
+        TechnicianRetrievalDTO technicianRetrievalDTO = userService.updateTechnician(id, technicianInsertionDTO);
+        return new ResponseEntity<>(technicianRetrievalDTO, HttpStatus.OK);
+    }
 
 }

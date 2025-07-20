@@ -5,7 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 
 @Data @Builder @NoArgsConstructor @AllArgsConstructor
 public class SiteRetrievalDTO {
@@ -17,9 +19,12 @@ public class SiteRetrievalDTO {
     private String siteAdresse;
     private String email;
     private String phoneNumber;
-    private String supervisor;
-    private Integer interventionsMade;
-    private Integer techniciansAssigned;
+    private List<Integer> interventionsMade;
+    private List<Integer> reportsConceted;
+    private List<Integer> exportationsConcerned;
+    private List<Integer> techniciansSupervisors;
     private LocalTime startOperatingHour;
     private LocalTime endOperatingHour;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

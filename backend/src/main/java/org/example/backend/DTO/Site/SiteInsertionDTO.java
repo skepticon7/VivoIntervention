@@ -18,7 +18,6 @@ public class SiteInsertionDTO {
     private String email;
     private String phoneNumber;
     private Integer createdById;
-    private Integer supervisorId;
     private LocalTime startOperatingHour;
     private LocalTime endOperatingHour;
 }

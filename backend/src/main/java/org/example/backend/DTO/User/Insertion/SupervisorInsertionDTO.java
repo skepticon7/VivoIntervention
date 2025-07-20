@@ -11,12 +11,6 @@ import org.modelmapper.internal.bytebuddy.implementation.bind.annotation.Super;
 import java.time.LocalDate;
 import java.util.List;
 
-@Data @SuperBuilder
-@AllArgsConstructor @NoArgsConstructor
+@Data @SuperBuilder @NoArgsConstructor
 public class SupervisorInsertionDTO extends UserInsertionDTO {
-    private Integer mainSite;
-    private List<Integer> specialities;
-    private String technicianStatus;
-    private Integer createdBy;
-    private LocalDate hireDate;
 }

@@ -15,4 +15,7 @@ public class UserInsertionDTO {
     private String email;
     private String phoneNumber;
     private String password;
+    private String technicianStatus;
+    private LocalDate hireDate;
+    private Integer createdBy;
 }

@@ -2,7 +2,7 @@ package org.example.backend.Mapper.Site;
 
 import org.example.backend.DTO.Site.SiteInsertionDTO;
 import org.example.backend.DTO.Site.SiteRetrievalDTO;
-import org.example.backend.Entities.Site;
+import org.example.backend.Entities.*;
 import org.example.backend.Enums.SiteStatus;
 import org.example.backend.Mapper.User.SupervisorDtoMapper;
 
@@ -18,7 +18,9 @@ public class SiteDtoMapper {
                 .email(siteInsertionDTO.getEmail())
                 .phoneNumber(siteInsertionDTO.getPhoneNumber())
                 .interventions(new ArrayList<>())
-                .technicians(new ArrayList<>())
+                .exportationsConcerned(new ArrayList<>())
+                .reportsConcerned(new ArrayList<>())
+                .supervisors_technicians(new ArrayList<>())
                 .siteCode(siteInsertionDTO.getSiteCode())
                 .siteStatus(SiteStatus.valueOf(siteInsertionDTO.getSiteStatus()))
                 .startOperatingHour(siteInsertionDTO.getStartOperatingHour())
@@ -30,6 +32,7 @@ public class SiteDtoMapper {
     public static SiteRetrievalDTO toDto(Site site) {
         if(site == null) return null;
         return SiteRetrievalDTO.builder()
+                .id(site.getId())
                 .siteAdresse(site.getSiteAdresse())
                 .siteName(site.getSiteName())
                 .siteCode(site.getSiteCode())
@@ -39,10 +42,14 @@ public class SiteDtoMapper {
                 .endOperatingHour(site.getEndOperatingHour())
                 .email(site.getEmail())
                 .phoneNumber(site.getPhoneNumber())
-                .supervisor(site.getSupervisor() == null ? null : site.getSupervisor().getFirstName().concat(" ").concat(site.getSupervisor().getLastName()))
-                .interventionsMade(site.getInterventions().size())
-                .techniciansAssigned(site.getTechnicians().size())
-                .id(site.getId())
+                .createdAt(site.getCreatedAt())
+                .updatedAt(site.getUpdatedAt())
+                .interventionsMade(site.getInterventions().stream().map(Intervention::getId).toList())
+                .reportsConceted(site.getReportsConcerned().stream().map(Report::getId).toList())
+                .exportationsConcerned(site.getExportationsConcerned().stream().map(Exportation::getId).toList())
+                .techniciansSupervisors(site.getSupervisors_technicians().stream()
+                        .map(User::getId)
+                        .toList())
                 .build();
     }
 

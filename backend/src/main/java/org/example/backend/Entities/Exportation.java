@@ -20,6 +20,7 @@ import java.util.List;
 @Builder
 @Data
 public class Exportation {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id ;
@@ -28,26 +29,30 @@ public class Exportation {
     private String fileName;
     private String fileLink;
 
-    @ManyToMany
-    @JoinTable(
-            name = "exportation_technician",
-            joinColumns = @JoinColumn(name = "exportation_id"),
-            inverseJoinColumns = @JoinColumn(name = "technician_id")
-    )
-    private List<User> technicians = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
-            name = "exportation_intervention",
-            joinColumns = @JoinColumn(name = "exportation_id"),
-            inverseJoinColumns = @JoinColumn(name = "intervention_id")
+            name = "exportation_site",
+            joinColumns = @JoinColumn(name = "exportation_id" , referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "site_id", referencedColumnName = "id")
     )
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private List<Site> sites;
+
+
+    @ManyToMany(mappedBy = "exportationsConcerned")
+    private List<User> supervisors_technicians = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "exportations")
     private List<Intervention> interventions = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn(name = "createdBySupervisor")
+    private Supervisor createdBySupervisor;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "created_by_id")
-    private User exportationCreatedBy;
+    @ManyToOne
+    @JoinColumn(name = "createdBySuperuser")
+    private SuperUser createdBySuperuser;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
