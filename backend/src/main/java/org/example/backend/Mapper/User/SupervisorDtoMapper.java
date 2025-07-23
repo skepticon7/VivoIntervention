@@ -19,13 +19,10 @@ public class SupervisorDtoMapper {
                 .password(userInsertionDTO.getPassword())
                 .interventionsAssigned(new ArrayList<>())
                 .interventionsCreated(new ArrayList<>())
-                .interventionTypes(new ArrayList<>())
                 .reportsConcerned(new ArrayList<>())
                 .exportationsConcerned(new ArrayList<>())
                 .reportsCreated(new ArrayList<>())
                 .exportationsCreated(new ArrayList<>())
-                .technicians(new ArrayList<>())
-                .sites(new ArrayList<>())
                 .technicianStatus(TechnicianStatus.valueOf(userInsertionDTO.getTechnicianStatus()))
                 .hireDate(userInsertionDTO.getHireDate())
                 .build();
@@ -46,8 +43,6 @@ public class SupervisorDtoMapper {
                     .hireDate(supervisor.getHireDate())
                     .createdBy(supervisor.getCreatedBySuperuser() != null ? supervisor.getCreatedBySuperuser().getId() : supervisor.getCreatedBySupervisor().getId())
                     .role("SUPERVISOR")
-                    .sitesIds(supervisor.getSites().stream().map(Site::getId).toList())
-                    .techniciansIds(supervisor.getTechnicians().stream().map(Technician::getId).toList())
                     .technicianStatus(supervisor.getTechnicianStatus().name())
                     .reportsCreated(supervisor.getReportsCreated().stream().map(Report::getId).toList())
                     .exportationsCreated(supervisor.getExportationsCreated().stream().map(Exportation::getId).toList())
@@ -55,7 +50,6 @@ public class SupervisorDtoMapper {
                     .reportsConcerned(supervisor.getReportsConcerned().stream().map(Report::getId).toList())
                     .interventionsCreated(supervisor.getInterventionsCreated().stream().map(Intervention::getId).toList())
                     .interventionsAssigned(supervisor.getInterventionsAssigned().stream().map(Intervention::getId).toList())
-                    .interventionTypesIds(supervisor.getInterventionTypes().stream().map(InterventionType::getId).toList())
                     .build();
     }
 }

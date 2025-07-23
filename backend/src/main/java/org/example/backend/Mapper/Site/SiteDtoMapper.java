@@ -20,7 +20,6 @@ public class SiteDtoMapper {
                 .interventions(new ArrayList<>())
                 .exportationsConcerned(new ArrayList<>())
                 .reportsConcerned(new ArrayList<>())
-                .supervisors_technicians(new ArrayList<>())
                 .siteCode(siteInsertionDTO.getSiteCode())
                 .siteStatus(SiteStatus.valueOf(siteInsertionDTO.getSiteStatus()))
                 .startOperatingHour(siteInsertionDTO.getStartOperatingHour())
@@ -47,9 +46,6 @@ public class SiteDtoMapper {
                 .interventionsMade(site.getInterventions().stream().map(Intervention::getId).toList())
                 .reportsConceted(site.getReportsConcerned().stream().map(Report::getId).toList())
                 .exportationsConcerned(site.getExportationsConcerned().stream().map(Exportation::getId).toList())
-                .techniciansSupervisors(site.getSupervisors_technicians().stream()
-                        .map(User::getId)
-                        .toList())
                 .build();
     }
 

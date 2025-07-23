@@ -29,8 +29,6 @@ public class InterventionType {
     @JoinColumn(name = "created_by_id", referencedColumnName = "id")
     private SuperUser createdBySuperuser;
 
-    @ManyToMany(mappedBy = "interventionTypes", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<User> supervisors_technicians;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

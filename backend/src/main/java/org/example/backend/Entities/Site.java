@@ -46,9 +46,6 @@ public class Site {
     @OneToMany(mappedBy = "site" , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Intervention> interventions;
 
-    @ManyToMany(mappedBy = "sites")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private List<User> supervisors_technicians;
 
     @ManyToMany(mappedBy = "sites")
     private List<Exportation> exportationsConcerned;

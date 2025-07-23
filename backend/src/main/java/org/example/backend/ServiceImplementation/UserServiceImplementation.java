@@ -55,18 +55,7 @@ public class UserServiceImplementation implements UserService {
         supervisor.setCreatedBySuperuser(superUser);
         superUser.getUsers().add(supervisor);
 
-        // affect all sites / interventionTypes / technicians
-        List<Site> sites = siteRepository.findAll();
-        List<InterventionType> interventionTypes = interventionTypeRepository.findAll();
-        List<Technician> technicians = userRepository.findAllTechnicians();
 
-//        sites.forEach(site -> site.getSupervisors_technicians().add(supervisor));
-//        interventionTypes.forEach(interventionType -> interventionType.getSupervisors_technicians().add(supervisor));
-//        technicians.forEach(technician -> technician.getSupervisors().add(supervisor));
-
-        supervisor.setSites(sites);
-        supervisor.setInterventionTypes(interventionTypes);
-        supervisor.setTechnicians(technicians);
 
 
         return SupervisorDtoMapper.toDto(
@@ -102,13 +91,7 @@ public class UserServiceImplementation implements UserService {
             supervisor.getTechniciansCreated().add(technician);
         }
 
-        technician.setSites(sites);
-        technician.setInterventionTypes(interventionTypes);
-        technician.setSupervisors(supervisors);
 
-        supervisors.forEach(supervisor -> {
-            supervisor.getTechnicians().add(technician);
-        });
 
         return TechnicianDtoMapper.toDto(
                 userRepository.save(technician)
@@ -139,17 +122,10 @@ public class UserServiceImplementation implements UserService {
                 .orElseThrow(() -> new NotFoundException("Technician with id " + id + " not found"));
 
         // Remove technician from all related entities
-        technician.getSites().clear();
-        technician.getInterventionTypes().clear();
-        technician.getSupervisors().clear();
 
-        List<Supervisor> supervisors = userRepository.findAllSupervisors();
-        supervisors.forEach(supervisor -> {
-            supervisor.getTechnicians().remove(technician);
-        });
 
         if(technician.getCreatedBySupervisor() != null) {
-            technician.getCreatedBySupervisor().getTechnicians().remove(technician);
+            technician.getCreatedBySupervisor().getTechniciansCreated().remove(technician);
         } else if (technician.getCreatedBySuperuser() != null) {
             technician.getCreatedBySuperuser().getUsers().remove(technician);
         }
@@ -165,9 +141,6 @@ public class UserServiceImplementation implements UserService {
                 .orElseThrow(() -> new NotFoundException("Technician with id " + id + " not found"));
 
         // Remove technician from all related entities
-        supervisor.getSites().clear();
-        supervisor.getInterventionTypes().clear();
-        supervisor.getTechnicians().clear();
         supervisor.getTechniciansCreated().forEach(technician -> {
             technician.setCreatedBySupervisor(null);
         });

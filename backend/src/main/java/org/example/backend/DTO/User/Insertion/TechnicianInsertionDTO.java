@@ -5,10 +5,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDate;
-import java.util.List;
 
-@Data @AllArgsConstructor @NoArgsConstructor @SuperBuilder
-public class TechnicianInsertionDTO extends UserInsertionDTO{
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@SuperBuilder
+public class TechnicianInsertionDTO extends UserInsertionDTO {
+
     private boolean isSuperUser;
 }
