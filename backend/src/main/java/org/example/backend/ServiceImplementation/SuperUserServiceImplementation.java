@@ -33,4 +33,17 @@ public class SuperUserServiceImplementation implements SuperUserService {
                         ))
         );
     }
+
+    @Override
+    public SuperUserRetrievalDTO updateSuperUser(Integer id, SuperUserInsertionDTO superUserInsertionDTO) {
+        SuperUser superUser = superUserRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(
+                        "SuperUser with id " + id + " not found"
+                ));
+        modelMapper.getConfiguration().setSkipNullEnabled(true);
+        modelMapper.map(superUserInsertionDTO, superUser);
+        return SuperUserDtoMapper.toDto(
+                superUserRepository.save(superUser)
+        );
+    }
 }

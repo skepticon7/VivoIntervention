@@ -9,8 +9,11 @@ import org.example.backend.DTO.User.Retrieval.TechnicianRetrievalDTO;
 import org.example.backend.DTO.User.Retrieval.UserRetrievalDTO;
 import org.example.backend.Entities.Supervisor;
 import org.example.backend.Service.UserService;
+import org.example.backend.Utils.OnCreate;
+import org.example.backend.Utils.OnUpdate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor
@@ -33,13 +36,13 @@ public class UserController {
     }
 
     @PostMapping("/createSupervisor")
-    public ResponseEntity<SupervisorRetrievalDTO> createSupervisor(@Valid @RequestBody UserInsertionDTO userInsertionDTO){
+    public ResponseEntity<SupervisorRetrievalDTO> createSupervisor(@Validated(OnCreate.class) @RequestBody UserInsertionDTO userInsertionDTO){
         SupervisorRetrievalDTO supervisorRetrievalDTO = userService.createSupervisor(userInsertionDTO);
         return new ResponseEntity<>(supervisorRetrievalDTO , HttpStatus.CREATED);
     }
 
     @PostMapping("/createTechnician")
-    public ResponseEntity<TechnicianRetrievalDTO> createTechnician(@Valid @RequestBody TechnicianInsertionDTO technicianInsertionDTO){
+    public ResponseEntity<TechnicianRetrievalDTO> createTechnician(@Validated(OnCreate.class) @RequestBody TechnicianInsertionDTO technicianInsertionDTO){
         TechnicianRetrievalDTO technicianRetrievalDTO = userService.createTechnician(technicianInsertionDTO);
         return new ResponseEntity<>(technicianRetrievalDTO , HttpStatus.CREATED);
     }
@@ -57,13 +60,13 @@ public class UserController {
     }
 
     @PatchMapping("/updateSupervisor/{id}")
-    public ResponseEntity<SupervisorRetrievalDTO> updateSupervisor(@PathVariable("id") Integer id, @Valid @RequestBody UserInsertionDTO userInsertionDTO) {
+    public ResponseEntity<SupervisorRetrievalDTO> updateSupervisor(@PathVariable("id") Integer id, @Validated(OnUpdate.class) @RequestBody UserInsertionDTO userInsertionDTO) {
         SupervisorRetrievalDTO supervisorRetrievalDTO = userService.updateSupervisor(id, userInsertionDTO);
         return new ResponseEntity<>(supervisorRetrievalDTO, HttpStatus.OK);
     }
 
     @PatchMapping("/updateTechnician/{id}")
-    public ResponseEntity<TechnicianRetrievalDTO> updateTechnician(@PathVariable("id") Integer id , @Valid @RequestBody TechnicianInsertionDTO technicianInsertionDTO) {
+    public ResponseEntity<TechnicianRetrievalDTO> updateTechnician(@PathVariable("id") Integer id , @Validated(OnUpdate.class) @RequestBody TechnicianInsertionDTO technicianInsertionDTO) {
         TechnicianRetrievalDTO technicianRetrievalDTO = userService.updateTechnician(id, technicianInsertionDTO);
         return new ResponseEntity<>(technicianRetrievalDTO, HttpStatus.OK);
     }

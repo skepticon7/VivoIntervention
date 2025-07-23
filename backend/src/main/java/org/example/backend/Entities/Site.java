@@ -31,7 +31,6 @@ import java.util.List;
 )
 
 public class Site {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -69,5 +68,4 @@ public class Site {
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
-
 }

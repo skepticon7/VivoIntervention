@@ -5,9 +5,12 @@ import lombok.AllArgsConstructor;
 import org.example.backend.DTO.Site.SiteInsertionDTO;
 import org.example.backend.DTO.Site.SiteRetrievalDTO;
 import org.example.backend.Service.SiteService;
+import org.example.backend.Utils.OnCreate;
+import org.example.backend.Utils.OnUpdate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,7 +24,7 @@ public class SiteController {
 
     //only exclusive to the superuser
     @PostMapping("/createSite")
-    public ResponseEntity<SiteRetrievalDTO> createSite(@Valid @RequestBody SiteInsertionDTO siteInsertionDTO) {
+    public ResponseEntity<SiteRetrievalDTO> createSite(@Validated(OnCreate.class) @RequestBody SiteInsertionDTO siteInsertionDTO) {
         SiteRetrievalDTO siteRetrievalDTO = siteService.createSite(siteInsertionDTO);
         return new ResponseEntity<>(siteRetrievalDTO , HttpStatus.CREATED);
     }
@@ -47,7 +50,7 @@ public class SiteController {
 
     //only exclusive to the superuser
     @PatchMapping("/updateSite/{id}")
-    public ResponseEntity<SiteRetrievalDTO> updateSite(@PathVariable("id") Integer id, @Valid @RequestBody SiteInsertionDTO siteInsertionDTO) {
+    public ResponseEntity<SiteRetrievalDTO> updateSite(@PathVariable("id") Integer id, @Validated(OnUpdate.class) @RequestBody SiteInsertionDTO siteInsertionDTO) {
         SiteRetrievalDTO updatedSite = siteService.updateSite(id, siteInsertionDTO);
         return new ResponseEntity<>(updatedSite, HttpStatus.OK);
     }
