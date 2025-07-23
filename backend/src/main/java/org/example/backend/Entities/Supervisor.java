@@ -18,15 +18,6 @@ import java.util.List;
 @NoArgsConstructor @SuperBuilder
 public class Supervisor extends User{
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(
-            name = "supervisor_technician",
-            joinColumns = @JoinColumn(name = "supervisor_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "technician_id", referencedColumnName = "id")
-    )
-    private List<Technician> technicians;
-
-
     @OneToMany(mappedBy = "createdBySupervisor" , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Technician> techniciansCreated;
 

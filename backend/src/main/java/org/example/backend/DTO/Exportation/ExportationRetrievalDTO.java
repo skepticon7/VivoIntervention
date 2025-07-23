@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.example.backend.DTO.User.Insertion.UserInsertionDTO;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,10 @@ public class ExportationRetrievalDTO {
     private LocalDate endDate;
     private String fileName;
     private String fileLink;
-    private List<UserInsertionDTO> technicians = new ArrayList<>();
-    private List<UserInsertionDTO> interventions = new ArrayList<>();
-    private UserInsertionDTO exportationCreatedBy;
+    private List<Integer> supervisors_technicians;
+    private List<Integer> interventions;
+    private List<Integer> sites;
+    private Integer exportationCreatedBy;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

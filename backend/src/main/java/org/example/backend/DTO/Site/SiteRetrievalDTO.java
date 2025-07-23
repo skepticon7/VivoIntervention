@@ -22,7 +22,6 @@ public class SiteRetrievalDTO {
     private List<Integer> interventionsMade;
     private List<Integer> reportsConceted;
     private List<Integer> exportationsConcerned;
-    private List<Integer> techniciansSupervisors;
     private LocalTime startOperatingHour;
     private LocalTime endOperatingHour;
     private LocalDateTime createdAt;

@@ -22,10 +22,8 @@ public class UserRetrievalDTO {
     private Integer createdBy;
     private String technicianStatus;
     private List<Integer> interventionsAssigned;
-    private List<Integer>  interventionTypesIds;
     private List<Integer> interventionsCreated;
     private List<Integer> reportsConcerned;
-    private List<Integer> sitesIds;
     private List<Integer> exportationsConcerned;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

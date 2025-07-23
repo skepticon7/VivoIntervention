@@ -15,8 +15,7 @@ import java.util.List;
 
 @DiscriminatorValue(value = "TECHNICIAN")
 @Entity
-@Data @AllArgsConstructor @NoArgsConstructor @SuperBuilder
+@Data @NoArgsConstructor @SuperBuilder
 public class Technician extends User {
-    @ManyToMany(mappedBy = "technicians")
-    private List<Supervisor> supervisors;
+
 }

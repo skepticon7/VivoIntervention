@@ -35,6 +35,9 @@ public class Intervention {
     private InterventionStatus interventionStatus;
 
     @ManyToOne
+    private InterventionType interventionType;
+
+    @ManyToOne
     @JoinColumn(name = "site_id")
     private Site site;
 

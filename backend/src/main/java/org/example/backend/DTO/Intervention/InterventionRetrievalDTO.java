@@ -4,21 +4,26 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.example.backend.DTO.User.Insertion.UserInsertionDTO;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data @Builder @NoArgsConstructor @AllArgsConstructor
 public class InterventionRetrievalDTO {
     private Integer id;
+    private String code;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private String interventionStatus;
-    private String interventionType;
+    private Integer interventionType;
     private String interventionPriority;
-    private String site;
+    private List<Integer> exportations;
+    private List<Integer> reports;
+    private Integer site;
     private String comment;
-    private UserInsertionDTO interventionCreatedBy;
-    private UserInsertionDTO interventionAssignedTo;
+    private Integer interventionCreatedBySuperuser;
+    private Integer interventionCreatedBySupervisorTechnician;
+    private Integer interventionAssignedTo;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

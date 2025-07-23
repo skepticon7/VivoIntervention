@@ -11,13 +11,15 @@ import java.time.LocalTime;
 
 @Data @Builder @NoArgsConstructor @AllArgsConstructor
 public class InterventionInsertionDTO {
-    private LocalDateTime startDate;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
     private Integer site;
     private String code;
     private String interventionStatus;
-    private String interventionType;
+    private Integer interventionType;
     private String interventionPriority;
     private Integer CreatedBy;
     private Integer AssignedTo;
     private String comment;
+    private Boolean isSuperUser;
 }

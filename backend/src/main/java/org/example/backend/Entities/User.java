@@ -24,7 +24,7 @@ import java.util.List;
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "ROLE" , length = 20)
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = "email") , @UniqueConstraint(columnNames = "phoneNumber") })
 public abstract class User {
 
     @Id
@@ -45,23 +45,6 @@ public abstract class User {
 
     @ManyToOne
     private Supervisor createdBySupervisor;
-
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(
-            name = "user_interventionType",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "interventionType_id")
-    )
-    private List<InterventionType> interventionTypes;
-
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(
-            name = "user_site",
-            joinColumns = @JoinColumn(name = "user_id" , referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "site_id", referencedColumnName = "id")
-    )
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private List<Site> sites;
 
     @OneToMany(mappedBy = "assignedTo" , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

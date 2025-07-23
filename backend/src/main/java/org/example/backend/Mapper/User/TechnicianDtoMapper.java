@@ -23,12 +23,9 @@ public class TechnicianDtoMapper {
                    .createdAt(technician.getCreatedAt())
                    .updatedAt(technician.getUpdatedAt())
                    .role("TECHNICIAN")
-                   .supervisorsIds(technician.getSupervisors().stream().map(User::getId).toList())
                    .interventionsAssigned(technician.getInterventionsAssigned().stream().map(Intervention::getId).toList())
                    .interventionsCreated(technician.getInterventionsCreated().stream().map(Intervention::getId).toList())
-                   .interventionTypesIds(technician.getInterventionTypes().stream().map(InterventionType::getId).toList())
                    .reportsConcerned(technician.getReportsConcerned().stream().map(Report::getId).toList())
-                   .sitesIds(technician.getSites().stream().map(Site::getId).toList())
                    .exportationsConcerned(technician.getExportationsConcerned().stream().map(Exportation::getId).toList())
                    .createdBy(technician.getCreatedBySuperuser() == null && technician.getCreatedBySupervisor() == null  ? null : (technician.getCreatedBySupervisor() != null ? technician.getCreatedBySupervisor().getId() : technician.getCreatedBySuperuser().getId()))
                    .build();
@@ -47,12 +44,9 @@ public class TechnicianDtoMapper {
                     .technicianStatus(TechnicianStatus.valueOf(technicianInsertionDTO.getTechnicianStatus()))
                     .interventionsAssigned(new ArrayList<>())
                     .interventionsCreated(new ArrayList<>())
-                    .interventionTypes(new ArrayList<>())
                     .reportsConcerned(new ArrayList<>())
                     .exportationsConcerned(new ArrayList<>())
-                 .hireDate(technicianInsertionDTO.getHireDate())
-                    .sites(new ArrayList<>())
-                 .supervisors(new ArrayList<>())
-                 .build();
+                    .hireDate(technicianInsertionDTO.getHireDate())
+                    .build();
     }
 }

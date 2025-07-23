@@ -25,12 +25,12 @@ public class InterventionType {
     private String interventionName;
     private String description;
 
+    @OneToMany(mappedBy = "interventionType", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Intervention> interventions;
+
     @ManyToOne
     @JoinColumn(name = "created_by_id", referencedColumnName = "id")
     private SuperUser createdBySuperuser;
-
-    @ManyToMany(mappedBy = "interventionTypes", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<User> supervisors_technicians;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
