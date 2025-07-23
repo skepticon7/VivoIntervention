@@ -7,11 +7,10 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.example.backend.Utils.OnCreate;
 
-import java.time.LocalDate;
-import java.util.List;
 
 @Data @AllArgsConstructor @NoArgsConstructor @SuperBuilder
 public class TechnicianInsertionDTO extends UserInsertionDTO{
     @NotNull(message = "is superUser cannot be null", groups = {OnCreate.class})
     private boolean isSuperUser;
 }
+

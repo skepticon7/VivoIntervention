@@ -54,7 +54,6 @@ public class UserServiceImplementation implements UserService {
                     .orElseThrow(() -> new NotFoundException("SuperUser with id " + createdById + " not found"));
         supervisor.setCreatedBySuperuser(superUser);
         superUser.getUsers().add(supervisor);
-
         return SupervisorDtoMapper.toDto(
                 userRepository.save(supervisor)
         );
@@ -84,7 +83,6 @@ public class UserServiceImplementation implements UserService {
             technician.setCreatedBySupervisor(supervisor);
             supervisor.getTechniciansCreated().add(technician);
         }
-
         return TechnicianDtoMapper.toDto(
                 userRepository.save(technician)
         );
@@ -128,6 +126,7 @@ public class UserServiceImplementation implements UserService {
     public SupervisorRetrievalDTO deleteSupervisor(Integer id) {
         Supervisor supervisor = userRepository.findSupervisorById(id)
                 .orElseThrow(() -> new NotFoundException("Supervisor with id " + id + " not found"));
+
 
         supervisor.getTechniciansCreated().forEach(technician -> {
             technician.setCreatedBySupervisor(null);

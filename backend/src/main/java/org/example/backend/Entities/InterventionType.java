@@ -32,6 +32,8 @@ public class InterventionType {
     @JoinColumn(name = "created_by_id", referencedColumnName = "id")
     private SuperUser createdBySuperuser;
 
+
+=======
     @CreationTimestamp
     private LocalDateTime createdAt;
     @UpdateTimestamp

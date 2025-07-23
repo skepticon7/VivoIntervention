@@ -63,7 +63,6 @@ public class SiteServiceImplementation implements SiteService {
         superUser.getSites().add(newSite);
         newSite.setCreatedBySuperuser(superUser);
 
-
         return SiteDtoMapper.toDto(siteRepository.save(newSite));
     }
 
