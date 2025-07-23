@@ -7,10 +7,8 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
-@SuperBuilder
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-@SuperBuilder @Data  @NoArgsConstructor
+@SuperBuilder
 public class TechnicianRetrievalDTO extends UserRetrievalDTO{
 }

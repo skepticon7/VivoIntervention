@@ -72,7 +72,7 @@ public class InterventionServiceImplementation implements InterventionService {
                                 "User to assign intervention to with ID " + assignedTo + " not found."
                         ));
 
-        if(!userAssignedTo.getTechnicianStatus().equals(TechnicianStatus.AVAILABLE.toString()))
+        if(!(userAssignedTo.getTechnicianStatus().equals(TechnicianStatus.AVAILABLE)))
             throw new NotFoundException("User with ID " + assignedTo + " is not available for intervention assignment.");
 
 

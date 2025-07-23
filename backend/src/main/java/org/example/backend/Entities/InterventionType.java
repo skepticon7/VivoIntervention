@@ -33,7 +33,6 @@ public class InterventionType {
     private SuperUser createdBySuperuser;
 
 
-=======
     @CreationTimestamp
     private LocalDateTime createdAt;
     @UpdateTimestamp
