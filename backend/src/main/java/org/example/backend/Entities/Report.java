@@ -22,6 +22,7 @@ public class Report {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private String pdfName;
     private String pdfLink;
 
@@ -33,17 +34,17 @@ public class Report {
     @JoinColumn(name = "createdBySupervisor")
     private Supervisor createdBySupervisor;
 
+    @Builder.Default
     @ManyToMany(mappedBy = "reportsConcerned")
-    private List<User> supervisors_technicians;
+    private List<User> supervisors_technicians = new ArrayList<>();
 
+    @Builder.Default
     @ManyToMany(mappedBy = "reports")
-    private List<Intervention> interventions;
-
+    private List<Intervention> interventions = new ArrayList<>();
 
     @CreationTimestamp
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
-
 }

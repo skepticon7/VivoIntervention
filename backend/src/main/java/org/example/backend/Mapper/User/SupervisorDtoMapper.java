@@ -47,6 +47,7 @@ public class SupervisorDtoMapper {
                 .techniciansCreated(supervisor.getTechniciansCreated().stream()
                         .map(Technician::getId)
                         .toList())
+
                     .technicianStatus(supervisor.getTechnicianStatus().name())
                     .reportsCreated(supervisor.getReportsCreated().stream().map(Report::getId).toList())
                     .exportationsCreated(supervisor.getExportationsCreated().stream().map(Exportation::getId).toList())

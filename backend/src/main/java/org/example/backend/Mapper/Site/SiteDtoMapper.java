@@ -46,7 +46,6 @@ public class SiteDtoMapper {
                 .interventionsMade(site.getInterventions().stream().map(Intervention::getId).toList())
                 .reportsConceted(site.getReportsConcerned().stream().map(Report::getId).toList())
                 .exportationsConcerned(site.getExportationsConcerned().stream().map(Exportation::getId).toList())
-
                 .build();
     }
 
