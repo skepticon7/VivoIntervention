@@ -54,10 +54,6 @@ public class UserServiceImplementation implements UserService {
                     .orElseThrow(() -> new NotFoundException("SuperUser with id " + createdById + " not found"));
         supervisor.setCreatedBySuperuser(superUser);
         superUser.getUsers().add(supervisor);
-
-
-
-
         return SupervisorDtoMapper.toDto(
                 userRepository.save(supervisor)
         );
@@ -74,9 +70,6 @@ public class UserServiceImplementation implements UserService {
 
         Technician technician = TechnicianDtoMapper.toEntity(technicianInsertionDTO);
         Integer createdById = technicianInsertionDTO.getCreatedBy();
-        List<Site> sites = siteRepository.findAll();
-        List<InterventionType> interventionTypes = interventionTypeRepository.findAll();
-        List<Supervisor> supervisors = userRepository.findAllSupervisors();
 
         if(technicianInsertionDTO.isSuperUser()){
             SuperUser superUser = superUserRepository.findById(createdById)
@@ -90,9 +83,6 @@ public class UserServiceImplementation implements UserService {
             technician.setCreatedBySupervisor(supervisor);
             supervisor.getTechniciansCreated().add(technician);
         }
-
-
-
         return TechnicianDtoMapper.toDto(
                 userRepository.save(technician)
         );
@@ -121,9 +111,6 @@ public class UserServiceImplementation implements UserService {
         Technician technician = userRepository.findTechnicianById(id)
                 .orElseThrow(() -> new NotFoundException("Technician with id " + id + " not found"));
 
-        // Remove technician from all related entities
-
-
         if(technician.getCreatedBySupervisor() != null) {
             technician.getCreatedBySupervisor().getTechniciansCreated().remove(technician);
         } else if (technician.getCreatedBySuperuser() != null) {
@@ -138,9 +125,9 @@ public class UserServiceImplementation implements UserService {
     @Override
     public SupervisorRetrievalDTO deleteSupervisor(Integer id) {
         Supervisor supervisor = userRepository.findSupervisorById(id)
-                .orElseThrow(() -> new NotFoundException("Technician with id " + id + " not found"));
+                .orElseThrow(() -> new NotFoundException("Supervisor with id " + id + " not found"));
 
-        // Remove technician from all related entities
+
         supervisor.getTechniciansCreated().forEach(technician -> {
             technician.setCreatedBySupervisor(null);
         });
@@ -151,6 +138,7 @@ public class UserServiceImplementation implements UserService {
     }
 
     //exclusive to superuser
+    @Transactional
     @Override
     public SupervisorRetrievalDTO updateSupervisor(Integer id, UserInsertionDTO userInsertionDTO) {
         Supervisor supervisor = userRepository.findSupervisorById(id)
@@ -164,6 +152,7 @@ public class UserServiceImplementation implements UserService {
 
 
     //exclusive to supervisor or superuser
+    @Transactional
     @Override
     public TechnicianRetrievalDTO updateTechnician(Integer id, TechnicianInsertionDTO technicianInsertionDTO) {
         Technician technician = userRepository.findTechnicianById(id)

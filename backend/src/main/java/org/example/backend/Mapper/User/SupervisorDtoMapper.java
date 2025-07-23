@@ -23,6 +23,7 @@ public class SupervisorDtoMapper {
                 .exportationsConcerned(new ArrayList<>())
                 .reportsCreated(new ArrayList<>())
                 .exportationsCreated(new ArrayList<>())
+                .techniciansCreated(new ArrayList<>())
                 .technicianStatus(TechnicianStatus.valueOf(userInsertionDTO.getTechnicianStatus()))
                 .hireDate(userInsertionDTO.getHireDate())
                 .build();
@@ -43,6 +44,10 @@ public class SupervisorDtoMapper {
                     .hireDate(supervisor.getHireDate())
                     .createdBy(supervisor.getCreatedBySuperuser() != null ? supervisor.getCreatedBySuperuser().getId() : supervisor.getCreatedBySupervisor().getId())
                     .role("SUPERVISOR")
+                .techniciansCreated(supervisor.getTechniciansCreated().stream()
+                        .map(Technician::getId)
+                        .toList())
+
                     .technicianStatus(supervisor.getTechnicianStatus().name())
                     .reportsCreated(supervisor.getReportsCreated().stream().map(Report::getId).toList())
                     .exportationsCreated(supervisor.getExportationsCreated().stream().map(Exportation::getId).toList())

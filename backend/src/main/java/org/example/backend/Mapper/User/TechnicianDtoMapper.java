@@ -46,7 +46,7 @@ public class TechnicianDtoMapper {
                     .interventionsCreated(new ArrayList<>())
                     .reportsConcerned(new ArrayList<>())
                     .exportationsConcerned(new ArrayList<>())
-                 .hireDate(technicianInsertionDTO.getHireDate())
-                 .build();
+                    .hireDate(technicianInsertionDTO.getHireDate())
+                    .build();
     }
 }

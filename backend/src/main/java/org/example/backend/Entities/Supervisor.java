@@ -18,8 +18,6 @@ import java.util.List;
 @NoArgsConstructor @SuperBuilder
 public class Supervisor extends User{
 
-
-
     @OneToMany(mappedBy = "createdBySupervisor" , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Technician> techniciansCreated;
 

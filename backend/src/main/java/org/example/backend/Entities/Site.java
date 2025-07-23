@@ -23,7 +23,10 @@ import java.util.List;
 @Table(
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = "siteName"),
-                @UniqueConstraint(columnNames = "siteCode")
+                @UniqueConstraint(columnNames = "siteCode"),
+                @UniqueConstraint(columnNames = "email"),
+                @UniqueConstraint(columnNames = "phoneNumber"),
+                @UniqueConstraint(columnNames = "siteAdresse")
         }
 )
 
@@ -45,7 +48,6 @@ public class Site {
 
     @OneToMany(mappedBy = "site" , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Intervention> interventions;
-
 
     @ManyToMany(mappedBy = "sites")
     private List<Exportation> exportationsConcerned;

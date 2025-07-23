@@ -59,12 +59,9 @@ public class SiteServiceImplementation implements SiteService {
         }
         Site newSite = SiteDtoMapper.toEntity(siteInsertionDTO);
 
-        List<User> users = userRepository.findAll();
 
         superUser.getSites().add(newSite);
         newSite.setCreatedBySuperuser(superUser);
-
-
 
         return SiteDtoMapper.toDto(siteRepository.save(newSite));
     }
@@ -83,8 +80,6 @@ public class SiteServiceImplementation implements SiteService {
                 .orElseThrow(() -> new NotFoundException("Site with id " + id + " not found"));
 
         Site site = siteRepository.getReferenceById(id);
-
-
 
         siteRepository.delete(site);
 
