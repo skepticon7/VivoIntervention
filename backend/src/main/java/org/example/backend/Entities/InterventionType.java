@@ -28,6 +28,14 @@ public class InterventionType {
     @OneToMany(mappedBy = "interventionType", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Intervention> interventions;
 
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "report_intervention_type",
+            joinColumns = @JoinColumn(name = "interventionType_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "report_id", referencedColumnName = "id")
+    )
+    private List<Report> reportsConcerned;
+
     @ManyToOne
     @JoinColumn(name = "created_by_id", referencedColumnName = "id")
     private SuperUser createdBySuperuser;

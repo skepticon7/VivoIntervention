@@ -24,7 +24,11 @@ public class Report {
     private Integer id;
 
     private String pdfName;
+
     private String pdfLink;
+
+    @ManyToMany(mappedBy = "reportsConcerned")
+    private List<Site> sites;
 
     @ManyToOne
     @JoinColumn(name = "createdBySuperuser")
@@ -34,13 +38,14 @@ public class Report {
     @JoinColumn(name = "createdBySupervisor")
     private Supervisor createdBySupervisor;
 
-    @Builder.Default
     @ManyToMany(mappedBy = "reportsConcerned")
-    private List<User> supervisors_technicians = new ArrayList<>();
+    private List<User> supervisors_technicians;
 
-    @Builder.Default
+    @ManyToMany(mappedBy = "reportsConcerned")
+    private List<InterventionType> interventionTypes;
+
     @ManyToMany(mappedBy = "reports")
-    private List<Intervention> interventions = new ArrayList<>();
+    private List<Intervention> interventions;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

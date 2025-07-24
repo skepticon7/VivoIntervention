@@ -11,7 +11,7 @@ import java.util.List;
 public interface InterventionService {
     InterventionRetrievalDTO createIntervention(InterventionInsertionDTO interventionInsertionDTO);
     InterventionRetrievalDTO getInterventionById(Integer id);
-    Page<InterventionRetrievalDTO> getAllInterventions(List<Integer> siteIds , List<Integer> interventionTypeIds , List<Integer> userIds , List<String> statuses , List<Integer> priorities , LocalDate startDate , LocalDate endDate , Pageable pageable);
+    Page<InterventionRetrievalDTO> getAllInterventions(List<Integer> siteIds , List<Integer> interventionTypeIds , List<Integer> userIds , List<String> statuses , List<String> priorities , LocalDate startDate , LocalDate endDate , Pageable pageable);
     InterventionRetrievalDTO updateIntervention(Integer id , InterventionInsertionDTO interventionInsertionDTO);
     InterventionRetrievalDTO deleteIntervention(Integer id);
 }

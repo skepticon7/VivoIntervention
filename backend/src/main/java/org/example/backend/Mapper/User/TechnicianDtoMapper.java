@@ -40,7 +40,6 @@ public class TechnicianDtoMapper {
                     .lastName(technicianInsertionDTO.getLastName())
                     .email(technicianInsertionDTO.getEmail())
                     .phoneNumber(technicianInsertionDTO.getPhoneNumber())
-                    .password(technicianInsertionDTO.getPassword())
                     .technicianStatus(TechnicianStatus.valueOf(technicianInsertionDTO.getTechnicianStatus()))
                     .interventionsAssigned(new ArrayList<>())
                     .interventionsCreated(new ArrayList<>())

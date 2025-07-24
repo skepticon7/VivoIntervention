@@ -29,7 +29,7 @@ public interface InterventionRepository extends JpaRepository<Intervention , Int
             @Param("interventionTypeIds") List<Integer> interventionTypeIds,
             @Param("userIds") List<Integer> userIds,
             @Param("statuses") List<String> statuses,
-            @Param("priorities") List<Integer> priorities,
+            @Param("priorities") List<String> priorities,
             @Param("startDate") LocalDate startDate,
             @Param("endDate") LocalDate endDate,
             Pageable pageable

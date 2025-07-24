@@ -102,7 +102,7 @@ public class InterventionServiceImplementation implements InterventionService {
 
 
     @Override
-    public Page<InterventionRetrievalDTO> getAllInterventions(List<Integer> siteIds, List<Integer> interventionTypeIds, List<Integer> userIds, List<String> statuses, List<Integer> priorities, LocalDate startDate, LocalDate endDate, Pageable pageable) {
+    public Page<InterventionRetrievalDTO> getAllInterventions(List<Integer> siteIds, List<Integer> interventionTypeIds, List<Integer> userIds, List<String> statuses, List<String> priorities, LocalDate startDate, LocalDate endDate, Pageable pageable) {
         return interventionRepository.findInterventions(
                 siteIds , interventionTypeIds , userIds , statuses , priorities , startDate , endDate , pageable
         ).map(InterventionDtoMapper::toDto);

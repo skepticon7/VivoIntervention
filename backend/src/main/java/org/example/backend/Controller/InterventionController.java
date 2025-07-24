@@ -6,10 +6,13 @@ import org.example.backend.DTO.Intervention.InterventionInsertionDTO;
 import org.example.backend.DTO.Intervention.InterventionRetrievalDTO;
 import org.example.backend.Repository.InterventionRepository;
 import org.example.backend.Service.InterventionService;
+import org.example.backend.Utils.OnCreate;
+import org.example.backend.Utils.OnUpdate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -28,7 +31,7 @@ public class InterventionController {
             @RequestParam(name = "InterventionTypeIds" , required = false) List<Integer> interventionTypeIds,
             @RequestParam(name = "userIds" , required = false) List<Integer> userIds,
             @RequestParam(name = "statuses" , required = false) List<String> statuses,
-            @RequestParam(name = "prorities" , required = false) List<Integer> priorities,
+            @RequestParam(name = "prorities" , required = false) List<String> priorities,
             @RequestParam(name = "startDate", required = false) LocalDate startDate,
             @RequestParam(name = "endDate", required = false) LocalDate endDate,
             @RequestParam(name = "page", defaultValue = "0") int page,
@@ -47,7 +50,7 @@ public class InterventionController {
 //    }
 
     @PostMapping("/createIntervention")
-    public ResponseEntity<InterventionRetrievalDTO> createIntervention(@RequestBody @Valid InterventionInsertionDTO interventionInsertionDTO){
+    public ResponseEntity<InterventionRetrievalDTO> createIntervention(@RequestBody @Validated(OnCreate.class) InterventionInsertionDTO interventionInsertionDTO){
         InterventionRetrievalDTO createdIntervention = interventionService.createIntervention(interventionInsertionDTO);
         return new ResponseEntity<>(createdIntervention, HttpStatus.CREATED);
     }
@@ -55,7 +58,7 @@ public class InterventionController {
     @PatchMapping("/updateIntervention/{id}")
     public ResponseEntity<InterventionRetrievalDTO> updateIntervention(
             @PathVariable("id") Integer id,
-            @RequestBody @Valid InterventionInsertionDTO interventionInsertionDTO
+            @RequestBody @Validated(OnUpdate.class) InterventionInsertionDTO interventionInsertionDTO
     ){
         InterventionRetrievalDTO intervention = interventionService.updateIntervention(id, interventionInsertionDTO);
         return new ResponseEntity<>(intervention, HttpStatus.OK);

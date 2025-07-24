@@ -34,7 +34,6 @@ public class SuperUserDtoMapper {
                 .lastName(superUserInsertionDTO.getLastName())
                 .email(superUserInsertionDTO.getEmail())
                 .phoneNumber(superUserInsertionDTO.getPhoneNumber())
-                .password(superUserInsertionDTO.getPassword())
                 .sites(new ArrayList<>())
                 .users(new ArrayList<>())
                 .interventions(new ArrayList<>())

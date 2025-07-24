@@ -9,6 +9,7 @@ import org.example.backend.Mapper.User.SuperUserDtoMapper;
 import org.example.backend.Repository.SuperUserRepository;
 import org.example.backend.Service.SuperUserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,10 +18,12 @@ public class SuperUserServiceImplementation implements SuperUserService {
 
     private final ModelMapper modelMapper;
     private final SuperUserRepository superUserRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public SuperUserRetrievalDTO createSuperUser(SuperUserInsertionDTO superUserInsertionDTO) {
         SuperUser newSuperUser = SuperUserDtoMapper.toEntity(superUserInsertionDTO);
+        newSuperUser.setPassword(passwordEncoder.encode(superUserInsertionDTO.getPassword()));
         return SuperUserDtoMapper.toDto(superUserRepository.save(newSuperUser));
     }
 

@@ -21,11 +21,7 @@ public class SuperUserController {
 
     private final SuperUserService superUserService;
 
-    @PostMapping("/createSuperuser")
-    public ResponseEntity<SuperUserRetrievalDTO> createSuperUser(@Validated(OnCreate.class) @RequestBody SuperUserInsertionDTO superUserInsertionDTO){
-        SuperUserRetrievalDTO superUserRetrievalDTO = superUserService.createSuperUser(superUserInsertionDTO);
-        return new ResponseEntity<>(superUserRetrievalDTO , HttpStatus.CREATED);
-    }
+
 
     @GetMapping("/getSuperuser/{id}")
     public ResponseEntity<SuperUserRetrievalDTO> getSuperUserById(@PathVariable("id") Integer id){

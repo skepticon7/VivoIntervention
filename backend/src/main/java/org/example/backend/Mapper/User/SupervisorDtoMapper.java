@@ -16,7 +16,6 @@ public class SupervisorDtoMapper {
                 .lastName(userInsertionDTO.getLastName())
                 .email(userInsertionDTO.getEmail())
                 .phoneNumber(userInsertionDTO.getPhoneNumber())
-                .password(userInsertionDTO.getPassword())
                 .interventionsAssigned(new ArrayList<>())
                 .interventionsCreated(new ArrayList<>())
                 .reportsConcerned(new ArrayList<>())

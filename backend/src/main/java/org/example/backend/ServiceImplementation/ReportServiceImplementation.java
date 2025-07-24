@@ -31,21 +31,22 @@ public class ReportServiceImplementation implements ReportService {
 
     @Override
     public ReportRetrievalDTO createReport(ReportInsertionDTO dto) {
-        SuperUser superUser = superUserRepository.findById(dto.getCreatedBySuperuserId())
-                .orElseThrow(() -> new RuntimeException("SuperUser not found"));
-        Supervisor supervisor = supervisorRepository.findById(dto.getCreatedBySupervisorId())
-                .orElseThrow(() -> new RuntimeException("Supervisor not found"));
-
-        Report report = Report.builder()
-                .pdfName(dto.getPdfName())
-                .pdfLink(dto.getPdfLink())
-                .createdBySuperuser(superUser)
-                .createdBySupervisor(supervisor)
-                .build();
-
-        Report saved = reportRepository.save(report);
-
-        return mapToDto(saved);
+//        SuperUser superUser = superUserRepository.findById(dto.getCreatedBySuperuserId())
+//                .orElseThrow(() -> new RuntimeException("SuperUser not found"));
+//        Supervisor supervisor = supervisorRepository.findById(dto.getCreatedBySupervisorId())
+//                .orElseThrow(() -> new RuntimeException("Supervisor not found"));
+//
+//        Report report = Report.builder()
+//                .pdfName(dto.getPdfName())
+//                .pdfLink(dto.getPdfLink())
+//                .createdBySuperuser(superUser)
+//                .createdBySupervisor(supervisor)
+//                .build();
+//
+//        Report saved = reportRepository.save(report);
+//
+//        return mapToDto(saved);
+        return null;
     }
 
     @Override
@@ -63,21 +64,22 @@ public class ReportServiceImplementation implements ReportService {
 
     @Override
     public ReportRetrievalDTO updateReport(Integer id, ReportInsertionDTO dto) {
-        Report report = reportRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Report not found"));
-
-        SuperUser superUser = superUserRepository.findById(dto.getCreatedBySuperuserId())
-                .orElseThrow(() -> new RuntimeException("SuperUser not found"));
-        Supervisor supervisor = supervisorRepository.findById(dto.getCreatedBySupervisorId())
-                .orElseThrow(() -> new RuntimeException("Supervisor not found"));
-
-        report.setPdfName(dto.getPdfName());
-        report.setPdfLink(dto.getPdfLink());
-        report.setCreatedBySuperuser(superUser);
-        report.setCreatedBySupervisor(supervisor);
-
-        Report updated = reportRepository.save(report);
-        return mapToDto(updated);
+//        Report report = reportRepository.findById(id)
+//                .orElseThrow(() -> new RuntimeException("Report not found"));
+//
+//        SuperUser superUser = superUserRepository.findById(dto.getCreatedBySuperuserId())
+//                .orElseThrow(() -> new RuntimeException("SuperUser not found"));
+//        Supervisor supervisor = supervisorRepository.findById(dto.getCreatedBySupervisorId())
+//                .orElseThrow(() -> new RuntimeException("Supervisor not found"));
+//
+//        report.setPdfName(dto.getPdfName());
+//        report.setPdfLink(dto.getPdfLink());
+//        report.setCreatedBySuperuser(superUser);
+//        report.setCreatedBySupervisor(supervisor);
+//
+//        Report updated = reportRepository.save(report);
+//        return mapToDto(updated);
+        return null;
     }
 
     @Override

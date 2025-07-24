@@ -29,7 +29,6 @@ public class Exportation {
     private String fileName;
     private String fileLink;
 
-
     @ManyToMany
     @JoinTable(
             name = "exportation_site",
@@ -38,7 +37,6 @@ public class Exportation {
     )
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Site> sites;
-
 
     @ManyToMany(mappedBy = "exportationsConcerned")
     private List<User> supervisors_technicians = new ArrayList<>();

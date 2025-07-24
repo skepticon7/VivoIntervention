@@ -35,17 +35,6 @@ public class UserController {
         return new ResponseEntity<>(user , HttpStatus.OK);
     }
 
-    @PostMapping("/createSupervisor")
-    public ResponseEntity<SupervisorRetrievalDTO> createSupervisor(@Validated(OnCreate.class) @RequestBody UserInsertionDTO userInsertionDTO){
-        SupervisorRetrievalDTO supervisorRetrievalDTO = userService.createSupervisor(userInsertionDTO);
-        return new ResponseEntity<>(supervisorRetrievalDTO , HttpStatus.CREATED);
-    }
-
-    @PostMapping("/createTechnician")
-    public ResponseEntity<TechnicianRetrievalDTO> createTechnician(@Validated(OnCreate.class) @RequestBody TechnicianInsertionDTO technicianInsertionDTO){
-        TechnicianRetrievalDTO technicianRetrievalDTO = userService.createTechnician(technicianInsertionDTO);
-        return new ResponseEntity<>(technicianRetrievalDTO , HttpStatus.CREATED);
-    }
 
     @DeleteMapping("/deleteTechnician/{id}")
     public ResponseEntity<TechnicianRetrievalDTO> deleteTechnician(@PathVariable("id") Integer id) {

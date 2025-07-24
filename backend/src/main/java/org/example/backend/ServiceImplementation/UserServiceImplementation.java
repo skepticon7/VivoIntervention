@@ -20,6 +20,7 @@ import org.example.backend.Repository.SuperUserRepository;
 import org.example.backend.Repository.UserRepository;
 import org.example.backend.Service.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,6 +36,7 @@ public class UserServiceImplementation implements UserService {
     private final InterventionTypeRepository interventionTypeRepository;
     private final SuperUserRepository superUserRepository;
     private final ModelMapper modelMapper;
+    private final PasswordEncoder passwordEncoder;
 
 
     @Override
@@ -54,6 +56,7 @@ public class UserServiceImplementation implements UserService {
                     .orElseThrow(() -> new NotFoundException("SuperUser with id " + createdById + " not found"));
         supervisor.setCreatedBySuperuser(superUser);
         superUser.getUsers().add(supervisor);
+        supervisor.setPassword(passwordEncoder.encode(userInsertionDTO.getPassword()));
         return SupervisorDtoMapper.toDto(
                 userRepository.save(supervisor)
         );
@@ -69,6 +72,7 @@ public class UserServiceImplementation implements UserService {
             throw new AlreadyExistsException("User with email " + technicianInsertionDTO.getEmail() + " already exists");
 
         Technician technician = TechnicianDtoMapper.toEntity(technicianInsertionDTO);
+        technician.setPassword(passwordEncoder.encode(technicianInsertionDTO.getPassword()));
         Integer createdById = technicianInsertionDTO.getCreatedBy();
 
         if(technicianInsertionDTO.isSuperUser()){

@@ -28,8 +28,8 @@ public class SiteInsertionDTO {
     private String phoneNumber;
     @NotNull(message = "Created by cannot be null" , groups = {OnCreate.class})
     private Integer createdById;
-    @NotBlank(message = "Start operating hour cannot be blank" , groups = {OnCreate.class})
+    @NotNull(message = "Start operating hour cannot be blank" , groups = {OnCreate.class})
     private LocalTime startOperatingHour;
-    @NotBlank(message = "End operating hour cannot be blank" , groups = {OnCreate.class})
+    @NotNull(message = "End operating hour cannot be blank" , groups = {OnCreate.class})
     private LocalTime endOperatingHour;
 }
