@@ -1,5 +1,6 @@
 package org.example.backend.Configuration;
 
+import lombok.Data;
 import org.example.backend.Entities.SuperUser;
 import org.example.backend.Entities.User;
 import org.springframework.security.core.GrantedAuthority;
@@ -9,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
+@Data
 public class CustomUserDetails implements UserDetails {
 
     private final SuperUser superUser;
@@ -37,6 +39,7 @@ public class CustomUserDetails implements UserDetails {
         this.user = user;
         this.superUser = null;
     }
+
 
 
     @Override

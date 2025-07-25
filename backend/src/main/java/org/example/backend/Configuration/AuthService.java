@@ -1,19 +1,31 @@
 package org.example.backend.Configuration;
 
+import com.nimbusds.jose.proc.SecurityContext;
+import jakarta.xml.bind.PrintConversionEvent;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.example.backend.Entities.SuperUser;
+import org.example.backend.Entities.Supervisor;
+import org.example.backend.Entities.User;
+import org.example.backend.Exceptions.NotFoundException;
+import org.example.backend.Exceptions.UnauthorizedAccessException;
 import org.example.backend.Repository.SuperUserRepository;
+import org.example.backend.Repository.SupervisorRepository;
 import org.example.backend.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.*;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.time.Instant;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,11 +36,28 @@ public class AuthService {
 
     @Autowired
     private JwtEncoder jwtEncoder;
+    @Autowired
+    private SuperUserRepository superUserRepository;
+    @Autowired
+    private SupervisorRepository supervisorRepository;
 
     public String generateToken(Authentication authentication) {
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
         String roles = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(" "));
         return buildToken(userDetails.getUsername() , roles , userDetails.getId());
+    }
+
+
+    public CustomUserDetails getAuthenticatedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication == null || !authentication.isAuthenticated() || authentication.getPrincipal() == null)
+            throw new UnauthorizedAccessException("Unauthorized , access denied");
+        if(authentication.getPrincipal() instanceof Jwt ){
+            return convertJwtToCustomUserDetails((Jwt) authentication.getPrincipal());
+        }else if(authentication.getPrincipal() instanceof CustomUserDetails){
+            return (CustomUserDetails) authentication.getPrincipal();
+        }
+        throw new UnauthorizedAccessException("Unauthorized , access denied");
     }
 
     private String buildToken(String username , String roles , Integer id) {
@@ -44,6 +73,19 @@ public class AuthService {
                 jwtClaimsSet
         );
         return jwtEncoder.encode(jwtEncoderParameters).getTokenValue();
+    }
+
+    private CustomUserDetails convertJwtToCustomUserDetails(Jwt jwt) {
+        Long userId = jwt.getClaim("id");
+        String roles = jwt.getClaim("scope");
+        if(roles.contains("ROLE_SUPER_USER")) {
+            SuperUser superUser = superUserRepository.findById((userId.intValue()))
+                    .orElseThrow(() -> new NotFoundException("superuser with id " + userId + " not found"));
+            return new CustomUserDetails(superUser);
+        }
+        User user = supervisorRepository.findById(userId.intValue())
+                .orElseThrow(() -> new NotFoundException("user with id : " + userId + " not found"));
+        return new CustomUserDetails(user);
     }
 
 }
