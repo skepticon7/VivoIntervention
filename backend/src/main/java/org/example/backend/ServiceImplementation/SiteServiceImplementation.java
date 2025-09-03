@@ -3,6 +3,8 @@ package org.example.backend.ServiceImplementation;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.example.backend.DTO.Site.SiteInsertionDTO;
+import org.example.backend.DTO.Site.SiteMinimalDTO;
+import org.example.backend.DTO.Site.SitePieStats;
 import org.example.backend.DTO.Site.SiteRetrievalDTO;
 import org.example.backend.Entities.Site;
 import org.example.backend.Entities.SuperUser;
@@ -98,5 +100,19 @@ public class SiteServiceImplementation implements SiteService {
         modelMapper.map(siteInsertionDTO, site);
 
         return SiteDtoMapper.toDto(siteRepository.save(site));
+    }
+
+    @Override
+    public List<SitePieStats> getSitesPieStats(Integer id) {
+        List<Site> sites = siteRepository.findAll();
+         return sites.stream().map(site ->
+            SitePieStats.builder()
+                    .site(SiteMinimalDTO.builder()
+                            .id(site.getId())
+                            .name(site.getSiteName())
+                            .build())
+                    .interventions(id == null ? site.getInterventions().size() : (int) site.getInterventions().stream().filter(inter -> inter.getAssignedTo().getId() == id).count())
+                    .build()
+        ).toList();
     }
 }

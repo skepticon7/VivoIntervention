@@ -41,6 +41,10 @@ public class CustomUserDetails implements UserDetails {
     }
 
 
+    public String getFullName() {
+        return superUser != null ? superUser.getFirstName().concat(" ").concat(superUser.getLastName()) : user.getFirstName().concat(" ").concat(user.getLastName());
+    }
+
 
     @Override
     public String getPassword() {

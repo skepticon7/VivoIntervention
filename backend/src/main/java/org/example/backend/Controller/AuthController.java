@@ -3,6 +3,7 @@ package org.example.backend.Controller;
 import lombok.AllArgsConstructor;
 import org.example.backend.Configuration.AuthService;
 import org.example.backend.DTO.Auth.LoginDTO;
+import org.example.backend.DTO.Auth.PasswordDTO;
 import org.example.backend.DTO.SuperUser.SuperUserInsertionDTO;
 import org.example.backend.DTO.SuperUser.SuperUserRetrievalDTO;
 import org.example.backend.DTO.User.Insertion.TechnicianInsertionDTO;
@@ -44,6 +45,15 @@ public class AuthController {
         return new ResponseEntity<>(authentication.getPrincipal(), HttpStatus.OK);
     }
 
+    @PostMapping("/confirmPassword")
+    public ResponseEntity<Map<String , String>> confirmPassword(@RequestBody PasswordDTO password) {
+        if (authService.confirmPassword(password)) {
+            return new ResponseEntity<>(Map.of("message" ,  "Password confirmed successfully" ), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(Map.of("message" ,  "Bad credentials" ), HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @PostMapping("/login")
     public ResponseEntity<Map<String , String>> login(@Validated(OnCreate.class) @RequestBody LoginDTO loginDTO) {
         Map<String , String> token = new HashMap<>();
@@ -52,6 +62,7 @@ public class AuthController {
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
         token.put("jwtToken" , authService.generateToken(authentication));
+        token.put("fullName" , authService.getFullName(authentication));
         return new ResponseEntity<>(token , HttpStatus.OK);
     }
 

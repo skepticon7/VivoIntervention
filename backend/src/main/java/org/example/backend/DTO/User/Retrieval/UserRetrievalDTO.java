@@ -23,8 +23,7 @@ public class UserRetrievalDTO {
     private String technicianStatus;
     private List<Integer> interventionsAssigned;
     private List<Integer> interventionsCreated;
-    private List<Integer> reportsConcerned;
-    private List<Integer> exportationsConcerned;
+    private Integer interventionsCompleted;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

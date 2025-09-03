@@ -18,8 +18,6 @@ public class SiteDtoMapper {
                 .email(siteInsertionDTO.getEmail())
                 .phoneNumber(siteInsertionDTO.getPhoneNumber())
                 .interventions(new ArrayList<>())
-                .exportationsConcerned(new ArrayList<>())
-                .reportsConcerned(new ArrayList<>())
                 .siteCode(siteInsertionDTO.getSiteCode())
                 .siteStatus(SiteStatus.valueOf(siteInsertionDTO.getSiteStatus()))
                 .startOperatingHour(siteInsertionDTO.getStartOperatingHour())
@@ -44,8 +42,6 @@ public class SiteDtoMapper {
                 .createdAt(site.getCreatedAt())
                 .updatedAt(site.getUpdatedAt())
                 .interventionsMade(site.getInterventions().stream().map(Intervention::getId).toList())
-                .reportsConceted(site.getReportsConcerned().stream().map(Report::getId).toList())
-                .exportationsConcerned(site.getExportationsConcerned().stream().map(Exportation::getId).toList())
                 .build();
     }
 

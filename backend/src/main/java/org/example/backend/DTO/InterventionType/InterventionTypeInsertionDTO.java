@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 
 @AllArgsConstructor @NoArgsConstructor @Builder @Data
 public class InterventionTypeInsertionDTO {
-    private String interventionName;
+    private String code;
+    private String name;
     private String description;
+    private String interventionTypePriority;
     private Integer createdBySuperuserId;
 }

@@ -53,23 +53,7 @@ public abstract class User {
     @OneToMany(mappedBy = "createdBySupervisor_technician" , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Intervention> interventionsCreated;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(
-            name = "user_exportation",
-            joinColumns = @JoinColumn(name = "user_id" , referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "exportation_id", referencedColumnName = "id")
-    )
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private List<Exportation> exportationsConcerned;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(
-            name = "user_report",
-            joinColumns = @JoinColumn(name = "user_id" , referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "report_id", referencedColumnName = "id")
-    )
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private List<Report> reportsConcerned;
 
     @Transient
     public String getRole() {

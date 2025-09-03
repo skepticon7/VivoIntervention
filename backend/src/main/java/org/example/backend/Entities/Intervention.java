@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import org.aspectj.apache.bcel.classfile.Module;
 import org.example.backend.Enums.InterventionPriority;
 import org.example.backend.Enums.InterventionStatus;
+import org.example.backend.Enums.Type;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -21,10 +22,13 @@ import java.util.List;
 @Entity
 @Data
 @AllArgsConstructor @NoArgsConstructor @Builder
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = "code")})
 public class Intervention {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Enumerated(EnumType.STRING)
+    private Type type;
     private String code;
     private String comment;
     private LocalDateTime startTime;
@@ -40,22 +44,6 @@ public class Intervention {
     @ManyToOne
     @JoinColumn(name = "site_id")
     private Site site;
-
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(
-            name = "exportation_intervention",
-            joinColumns = @JoinColumn(name = "intervention_id" , referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "exportation_id" ,  referencedColumnName = "id")
-    )
-    private List<Exportation> exportations;
-
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(
-            name = "report_intervention",
-            joinColumns = @JoinColumn(name = "intervention_id" , referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "report_id" , referencedColumnName = "id")
-    )
-    private List<Report> reports;
 
     @ManyToOne
     @JoinColumn(name = "createdBySupervisor_technician")

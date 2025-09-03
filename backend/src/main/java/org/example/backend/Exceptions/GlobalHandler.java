@@ -28,6 +28,16 @@ public class GlobalHandler {
 //        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 //    }
 
+    @ExceptionHandler(NotAvailableException.class)
+    public ResponseEntity<ErrorResponse> handleNotAvailableException(NotAvailableException ex) {
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .status(HttpStatus.BAD_REQUEST.value())
+                .error(String.valueOf(HttpStatus.BAD_REQUEST))
+                .message(ex.getMessage())
+                .timestamp(LocalDateTime.now())
+                .build();
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
 
     @ExceptionHandler(UnauthorizedAccessException.class)
     public ResponseEntity<ErrorResponse> handleUnauthorizedAccessException(UnauthorizedAccessException ex) {

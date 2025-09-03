@@ -17,10 +17,10 @@ public class InterventionInsertionDTO {
     @NotNull(message = "Start date cannot be null" , groups = {OnCreate.class})
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    @NotNull(message = "Start date cannot be null" , groups = {OnCreate.class})
+    @NotNull(message = "Site cannot be null" , groups = {OnCreate.class})
     private Integer site;
     @NotBlank(message = "Intervention code cannot be blank" , groups = {OnCreate.class})
-    private String code;
+    private String type;
     @NotBlank(message = "Intervention status cannot be blank" , groups = {OnCreate.class})
     private String interventionStatus;
     @NotNull(message = "Intervention type cannot be null" , groups = {OnCreate.class})

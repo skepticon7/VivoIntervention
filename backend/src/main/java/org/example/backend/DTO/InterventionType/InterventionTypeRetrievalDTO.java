@@ -10,8 +10,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor @NoArgsConstructor @Builder @Data
 public class InterventionTypeRetrievalDTO {
     private Integer id;
-    private String interventionName;
+    private String name;
     private String description;
+    private String interventionTypePriority;
+    private Integer interventionsCompleted;
+    private Integer interventionsAssigned;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }
