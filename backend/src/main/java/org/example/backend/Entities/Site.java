@@ -48,17 +48,6 @@ public class Site {
     @OneToMany(mappedBy = "site" , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Intervention> interventions;
 
-    @ManyToMany(mappedBy = "sites")
-    private List<Exportation> exportationsConcerned;
-
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(
-            name = "site_report",
-            joinColumns = @JoinColumn(name = "site_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "report_id", referencedColumnName = "id")
-    )
-    private List<Report> reportsConcerned;
-
     @ManyToOne
     @JoinColumn(name = "created_by_id", referencedColumnName = "id")
     private SuperUser createdBySuperuser;

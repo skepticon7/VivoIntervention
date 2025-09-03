@@ -19,12 +19,10 @@ import java.util.List;
 public class Supervisor extends User{
 
     @OneToMany(mappedBy = "createdBySupervisor" , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<Technician> techniciansCreated;
+    private List<User> techniciansCreated;
 
     @OneToMany(mappedBy = "createdBySupervisor" , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Exportation> exportationsCreated;
 
-    @OneToMany(mappedBy = "createdBySupervisor" , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<Report> reportsCreated;
 
 }

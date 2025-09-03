@@ -25,7 +25,7 @@ public class UserInsertionDTO {
     @NotBlank(message = "Phone number cannot be blank" , groups = {OnCreate.class})
     private String phoneNumber;
     @NotBlank(message = "Password cannot be blank" , groups = {OnCreate.class})
-    @Size(min = 8 , max = 20 , message = "Password must be between 8 and 20 characters" , groups = {OnCreate.class , OnUpdate.class})
+    @Size(min = 8 , max = 20 , message = "Password must be between 8 and 20 characters" , groups = {OnCreate.class})
     private String password;
     @NotBlank(message = "Technician status cannot be blank" , groups = {OnCreate.class})
     private String technicianStatus;
@@ -34,4 +34,6 @@ public class UserInsertionDTO {
     private LocalDate hireDate;
     @NotNull(message = "Created by cannot be null" , groups = {OnCreate.class})
     private Integer createdBy;
+    @NotNull(message = "is superUser cannot be null", groups = {OnCreate.class})
+    private boolean isSuperUser;
 }

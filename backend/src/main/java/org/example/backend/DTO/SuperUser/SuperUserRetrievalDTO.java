@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -16,6 +17,8 @@ public class SuperUserRetrievalDTO {
     private String email;
     private String phoneNumber;
     private String role;
+    private String technicianStatus;
+    private LocalDate hireDate;
     private List<Integer> sites;
     private List<Integer> users;
     private List<Integer> interventions;

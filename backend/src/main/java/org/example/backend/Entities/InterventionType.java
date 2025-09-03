@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.backend.Enums.InterventionPriority;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -22,11 +23,15 @@ public class InterventionType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String interventionName;
+    private String name;
     private String description;
+
+    @Enumerated(EnumType.STRING)
+    private InterventionPriority interventionTypePriority;
 
     @OneToMany(mappedBy = "interventionType", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Intervention> interventions;
+
 
     @ManyToOne
     @JoinColumn(name = "created_by_id", referencedColumnName = "id")

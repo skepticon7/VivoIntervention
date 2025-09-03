@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.example.backend.Enums.TechnicianStatus;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +32,12 @@ public class SuperUser{
 
     private String password;
 
+    private LocalDate hireDate;
+
     private String phoneNumber;
+
+    @Enumerated(EnumType.STRING)
+    private TechnicianStatus technicianStatus;
 
     @OneToMany(mappedBy = "createdBySuperuser" , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
@@ -47,9 +54,6 @@ public class SuperUser{
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Exportation> exportations;
 
-    @OneToMany(mappedBy = "createdBySuperuser" , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private List<Report> reports;
 
     @OneToMany(mappedBy = "createdBySuperuser" , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

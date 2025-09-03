@@ -10,9 +10,10 @@ import java.time.LocalDateTime;
 @Data @Builder @NoArgsConstructor @AllArgsConstructor
 public class InterventionDashboard {
     private Integer id;
+    private String type;
     private String code;
     private String status;
-    private String type;
+    private String interventionType;
     private String site;
     private String priority;
     private String technician;

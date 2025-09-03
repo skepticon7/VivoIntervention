@@ -24,27 +24,8 @@ public class Exportation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id ;
-    private LocalDate startDate;
-    private LocalDate endDate;
     private String fileName;
     private String fileLink;
-
-
-    @ManyToMany
-    @JoinTable(
-            name = "exportation_site",
-            joinColumns = @JoinColumn(name = "exportation_id" , referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "site_id", referencedColumnName = "id")
-    )
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private List<Site> sites;
-
-
-    @ManyToMany(mappedBy = "exportationsConcerned")
-    private List<User> supervisors_technicians = new ArrayList<>();
-
-    @ManyToMany(mappedBy = "exportations")
-    private List<Intervention> interventions = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "createdBySupervisor")

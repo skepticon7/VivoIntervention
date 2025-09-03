@@ -11,6 +11,5 @@ import java.util.List;
 @Data @SuperBuilder @AllArgsConstructor @NoArgsConstructor
 public class SupervisorRetrievalDTO extends UserRetrievalDTO{
     private List<Integer> techniciansCreated;
-    private List<Integer> reportsCreated;
     private List<Integer> exportationsCreated;
 }

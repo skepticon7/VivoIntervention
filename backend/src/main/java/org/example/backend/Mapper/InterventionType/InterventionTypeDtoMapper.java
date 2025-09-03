@@ -3,45 +3,37 @@ package org.example.backend.Mapper.InterventionType;
 import org.example.backend.DTO.InterventionType.InterventionTypeInsertionDTO;
 import org.example.backend.DTO.InterventionType.InterventionTypeRetrievalDTO;
 import org.example.backend.Entities.InterventionType;
-import org.example.backend.Entities.SuperUser;
+import org.example.backend.Enums.InterventionPriority;
+import org.example.backend.Enums.InterventionStatus;
+
+import java.util.ArrayList;
 
 public class InterventionTypeDtoMapper {
 
 
     public static InterventionType toEntity(InterventionTypeInsertionDTO dto) {
-
-        if (dto == null) {
-            throw new IllegalArgumentException("InterventionTypeInsertionDTO cannot be null");
-        }
-
-        if (dto.getCreatedBySuperuserId() == null) {
-            throw new IllegalArgumentException("createdBySuperuserId is required");
-        }
-
-
-
-
-
+        if(dto == null) return null;
         return InterventionType.builder()
-                .interventionName(dto.getInterventionName())
+                .name(dto.getName())
                 .description(dto.getDescription())
+                .interventionTypePriority(InterventionPriority.valueOf(dto.getInterventionTypePriority()))
+                .interventions(new ArrayList<>())
                 .build();
     }
 
 
     public static InterventionTypeRetrievalDTO toDto(InterventionType entity) {
-
-        if (entity == null) {
-            throw new IllegalArgumentException("L'entité InterventionType cannot be null");
-        }
-
-
+        if(entity == null) return null;
         return InterventionTypeRetrievalDTO.builder()
                 .id(entity.getId())
-                .interventionName(entity.getInterventionName())
-                .description(entity.getDescription())
                 .createdAt(entity.getCreatedAt())
                 .updatedAt(entity.getUpdatedAt())
+                .name(entity.getName())
+                .description(entity.getDescription())
+                .interventionTypePriority(entity.getInterventionTypePriority().name())
+                .interventionsCompleted((int) entity.getInterventions().stream().filter(inter -> inter.getInterventionStatus() == InterventionStatus.COMPLETED).count())
+                .interventionsAssigned(entity.getInterventions().size())
                 .build();
+
     }
 }

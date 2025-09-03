@@ -10,6 +10,7 @@ import org.example.backend.Mapper.InterventionType.InterventionTypeDtoMapper;
 import org.example.backend.Repository.InterventionTypeRepository;
 import org.example.backend.Repository.SuperUserRepository;
 import org.example.backend.Service.InterventionTypeService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class InterventionTypeServiceImplementation implements InterventionTypeSe
 
     private final InterventionTypeRepository interventionTypeRepository;
     private final SuperUserRepository superUserRepository;
+    private final ModelMapper modelMapper;
 
 
     @Override
@@ -28,11 +30,7 @@ public class InterventionTypeServiceImplementation implements InterventionTypeSe
         SuperUser superUser = superUserRepository.findById(dto.getCreatedBySuperuserId())
                 .orElseThrow(() -> new NotFoundException("SuperUser not found"));
 
-        InterventionType interventionType = InterventionType.builder()
-                .interventionName(dto.getInterventionName())
-                .description(dto.getDescription())
-                .createdBySuperuser(superUser)
-                .build();
+        InterventionType interventionType = InterventionTypeDtoMapper.toEntity(dto);
 
         InterventionType saved = interventionTypeRepository.save(interventionType);
 
@@ -62,8 +60,8 @@ public class InterventionTypeServiceImplementation implements InterventionTypeSe
         InterventionType interventionType = interventionTypeRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("InterventionType not found"));
 
-        interventionType.setInterventionName(dto.getInterventionName());
-        interventionType.setDescription(dto.getDescription());
+        modelMapper.getConfiguration().setSkipNullEnabled(true);
+        modelMapper.map(dto , interventionType);
 
         InterventionType updated = interventionTypeRepository.save(interventionType);
 

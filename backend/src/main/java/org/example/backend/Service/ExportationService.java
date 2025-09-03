@@ -10,13 +10,11 @@ import java.util.List;
 
 public interface ExportationService {
 
-    Page<ExportationRetrievalDTO> getAllExportations(
-            List<Integer> siteIds,
-            List<Integer> userIds,
-            LocalDate startDate,
-            LocalDate endDate,
-            List<Integer> supervisorIds,
-            List<Integer> superuserIds,
+    ExportationRetrievalDTO getExportationByFileName(String fileName);
+
+    Page<ExportationRetrievalDTO> getExportationsByUserId(
+            String role,
+            Integer id,
             Pageable pageable
     );
 
