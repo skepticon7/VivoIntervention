@@ -320,29 +320,43 @@ const Technicians = () => {
   };
 
 
-  const filteredTechnicians = technicians.filter((technician) => {
-    const matchesSearchTerm = technician.firstName.toLowerCase().includes(filterOptions.searchTerm.toLowerCase()) ||
-        technician.lastName.toLowerCase().includes(filterOptions.searchTerm.toLowerCase()) || technician.email.toLowerCase().includes(filterOptions.searchTerm.toLowerCase()) ||
-        technician.phoneNumber.toLowerCase().includes(filterOptions.searchTerm.toLowerCase());
+  const filteredTechnicians = useMemo(() => {
+    return technicians
+        .filter((technician) => {
+          const matchesSearchTerm =
+              technician.firstName.toLowerCase().includes(filterOptions.searchTerm.toLowerCase()) ||
+              technician.lastName.toLowerCase().includes(filterOptions.searchTerm.toLowerCase()) ||
+              technician.email.toLowerCase().includes(filterOptions.searchTerm.toLowerCase()) ||
+              technician.phoneNumber.toLowerCase().includes(filterOptions.searchTerm.toLowerCase());
 
-    const matchesStatus = filterOptions.selectedStatus === "all" || technician.technicianStatus === filterOptions.selectedStatus;
-    return matchesStatus && matchesSearchTerm;
-  }).sort((a, b) => {
-    switch (filterOptions.sortType) {
-      case "newest" :
-        return new Date(b.createdAt) - new Date(a.createdAt);
-      case "oldest" :
-        return new Date(a.createdAt) - new Date(b.createdAt);
-      case "ICA" :
-        return a.interventionsCompleted - b.interventionsCompleted;
-      case "ICD" :
-        return b.interventionsCompleted - a.interventionsCompleted;
-      case "IAA" : return a.interventionsAssigned.length - b.interventionsAssigned.length;
-      case "IAD" : return b.interventionsAssigned.length - a.interventionsAssigned.length;
-      case "HDA" : return new Date(a.hireDate) - new Date(b.hireDate);
-      case "HDD" : return new Date(b.hireDate) - new Date(a.hireDate);
-    }
-  })
+          const matchesStatus =
+              filterOptions.selectedStatus === "all" || technician.technicianStatus === filterOptions.selectedStatus;
+
+          return matchesStatus && matchesSearchTerm;
+        })
+        .sort((a, b) => {
+          switch (filterOptions.sortType) {
+            case "newest":
+              return new Date(b.createdAt) - new Date(a.createdAt);
+            case "oldest":
+              return new Date(a.createdAt) - new Date(b.createdAt);
+            case "ICA":
+              return a.interventionsCompleted - b.interventionsCompleted;
+            case "ICD":
+              return b.interventionsCompleted - a.interventionsCompleted;
+            case "IAA":
+              return a.interventionsAssigned.length - b.interventionsAssigned.length;
+            case "IAD":
+              return b.interventionsAssigned.length - a.interventionsAssigned.length;
+            case "HDA":
+              return new Date(a.hireDate) - new Date(b.hireDate);
+            case "HDD":
+              return new Date(b.hireDate) - new Date(a.hireDate);
+            default:
+              return 0;
+          }
+        });
+  }, [technicians, filterOptions]);
 
   const fetchTechniciansAndInterventionTypes = async () => {
     try{

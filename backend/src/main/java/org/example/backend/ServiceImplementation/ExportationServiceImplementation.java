@@ -48,7 +48,7 @@ public class ExportationServiceImplementation implements ExportationService {
         if(role.equalsIgnoreCase("SUPERUSER")){
                 return exportationRepository.findExportationsBySuperuser(id , pageable)
                         .map(ExportationDtoMapper::toDto);
-        }else if (role.equalsIgnoreCase("TECHNICIAN"))
+        }else if (role.equalsIgnoreCase("SUPERVISOR"))
             return exportationRepository.findExportationsBySupervisor(id , pageable)
                     .map(ExportationDtoMapper::toDto);
         else

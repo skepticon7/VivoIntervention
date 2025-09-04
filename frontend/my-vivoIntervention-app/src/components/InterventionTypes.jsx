@@ -232,9 +232,9 @@ const InterventionTypes = () => {
                 case 'CD' :
                     return b.interventionsCompleted - a.interventionsCompleted;
                 case 'AA' :
-                    return a.interventionsAssigned - b.interventionsAssgined;
+                    return a.interventionsAssigned - b.interventionsAssigned;
                 case 'AD' :
-                    return b.interventionsAssgined - a.interventionsAssigned;
+                    return b.interventionsAssigned - a.interventionsAssigned;
             }
         })
     }, [interventionTypes, filterOptions]);
