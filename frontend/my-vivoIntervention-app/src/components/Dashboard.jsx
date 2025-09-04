@@ -431,12 +431,7 @@ const Dashboard = () => {
                                                                 <SquarePen className="w-5 h-5 text-black"/>
                                                                 <p className="font-medium text-sm">Edit Intervention</p>
                                                             </button>
-                                                            <button
-                                                                className="flex items-center gap-5 p-2 w-full hover:bg-gray-100 cursor-pointer rounded-md transition-colors">
-                                                                <Trash2 className="w-5 h-5 text-red-500"/>
-                                                                <p className="font-medium text-sm text-red-500">Delete
-                                                                    Intervention</p>
-                                                            </button>
+
                                                         </div>
                                                     )}
                                                 </td>

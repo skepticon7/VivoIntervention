@@ -50,14 +50,15 @@ const Schedule = () => {
 
   const getInterventionsForDay = (date) => {
     return interventions.filter((inter) => {
-      const interventionDate = new Date(inter.startDate.split("T")[0]);
+      const parsedDate = new Date(inter.startDate);
       return (
-          interventionDate.getDate() === date.getDate() &&
-          interventionDate.getMonth() === date.getMonth() &&
-          interventionDate.getFullYear() === date.getFullYear()
-      )
-    })
-  }
+          parsedDate.getDate() === date.getDate() &&
+          parsedDate.getMonth() === date.getMonth() &&
+          parsedDate.getFullYear() === date.getFullYear()
+      );
+    });
+  };
+
 
   const {user} = useAuth();
   const role = user?.roles?.split("_")[1];
@@ -269,9 +270,8 @@ const Schedule = () => {
                     <div key={dayIndex} className='border-r'>
                       {Array.from({length : 24} , (_ , hour) => {
                         const interventions = getInterventionsForDay(day).filter((inter) => {
-                          const interventionHour = new Date(inter.startDate.split("T")[0]).getHours()
-                          console.log(interventionHour === hour);
-                          return interventionHour === hour
+                          const parsedDate = new Date(inter.startDate);
+                          return parsedDate.getHours() === hour;
                         })
 
                         return (

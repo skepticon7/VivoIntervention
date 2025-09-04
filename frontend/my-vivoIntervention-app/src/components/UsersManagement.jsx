@@ -418,7 +418,7 @@ const UserRow = ({user , index , onEdit , onView , usersSize , role}) => {
                       }}
                       className="flex items-center gap-5 p-2 w-full hover:bg-gray-100 cursor-pointer rounded-md transition-colors">
                     <SquarePen className="w-5 h-5 text-black"/>
-                    <p className="font-medium text-sm">Edit Intervention</p>
+                    <p className="font-medium text-sm">Edit user</p>
                   </button>
                 }
                 {(role === "SUPERVISOR" && user.role === "TECHNICIAN") &&
