@@ -50,12 +50,24 @@ VITE_API_BACKEND_SERVER=http://localhost:8000
 VITE_AZURE_CLIENT_ID=your_azure_client_id_here
 ```
 
-3 - Build and start containers
+3 - build the jar files for the spring app
+```bash
+cd backend
+./mvnw clean package -DskipTests
+```
+
+4 - build static files for the dist
+``` bash
+cd frontend
+npm run build
+```
+
+5 - Build and start containers
 
 ```bash
 docker-compose up -d --build
 ```
-4 - Wait for containers to start
+6 - Wait for containers to start
 
 Check the status with:
 
@@ -65,13 +77,13 @@ docker-compose ps
 
 All containers should show "Up" status.
 
-5 - Access the application
+7 - Access the application
 
 Frontend: `http://localhost:80`
 
 Backend API: `http://localhost:8000`
 
-6 - Create initial Superuser
+8 - Create initial Superuser
 Once all containers are running, create the first superuser:
 
 ```bash
