@@ -58,7 +58,7 @@ cd backend
 
 4 - build static files for the dist
 ``` bash
-cd frontend
+cd frontend/my-vivoIntervention-app
 npm run build
 ```
 
