@@ -1,6 +1,12 @@
 # Stage 1: Build the app
 FROM node:22 AS build
 
+ARG VITE_API_BACKEND_SERVER
+ARG VITE_AZURE_CLIENT_ID
+
+ENV VITE_API_BACKEND_SERVER=${VITE_API_BACKEND_SERVER}
+ENV VITE_AZURE_CLIENT_ID=${AZURE_CLIENT_ID}
+
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
@@ -8,18 +14,16 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-# Stage 2: Serve the built app with Node
 FROM node:22-alpine
+
+
 
 WORKDIR /app
 
-# Install a lightweight server
 RUN npm install -g serve
 
-# Copy built files
 COPY --from=build /app/dist ./dist
 
 EXPOSE 80
 
-# Serve the app
 CMD ["serve", "-s", "dist", "-l", "80"]

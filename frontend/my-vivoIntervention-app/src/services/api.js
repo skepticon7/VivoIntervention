@@ -12,6 +12,7 @@ const getAuthConfig = () => ({
 export const login = async (userCredentials) => {
     // eslint-disable-next-line no-useless-catch
     try{
+        console.log("backend server : " + backendServer);
         const response = await axios.post(`${backendServer}/api/auth/login` , userCredentials);
         console.log(response)
         return response;
