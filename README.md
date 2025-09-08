@@ -93,46 +93,46 @@ curl -X POST \
 ### 🐳 Docker Architecture
 The system uses Docker Compose with three services:
 
-vivo-db: MySQL 8.0 database with persistent storage
+* vivo-db: MySQL 8.0 database with persistent storage
 
-vivo-backend: Spring Boot application with JWT authentication
+* vivo-backend: Spring Boot application with JWT authentication
 
-vivo-frontend: React application with Vite build system
+* vivo-frontend: React application with Vite build system
 
 ### 🔐 Environment Variables Explained
-Database variables: Configure MySQL connection and credentials
+* Database variables: Configure MySQL connection and credentials
 
-JWT_SECRET: Secret key for signing authentication tokens
+* JWT_SECRET: Secret key for signing authentication tokens
 
-Azure variables: For OneDrive integration and Power BI exports
+* Azure variables: For OneDrive integration and Power BI exports
 
-VITE_ variables: Frontend environment variables for API connection
+* VITE_ variables: Frontend environment variables for API connection
 
 ### 🔐 Roles & Permissions
 
-Superuser → Full control (manage users, sites, intervention types, exports).
+* Superuser → Full control (manage users, sites, intervention types, exports).
 
-Supervisor → Manage interventions and technicians, export data.
+* Supervisor → Manage interventions and technicians, export data.
 
-Technician → Limited access (create/view own interventions).
+* Technician → Limited access (create/view own interventions).
 
 ### 🛠️ Tech Stack
 
-Frontend → React, Axios, Context API, MSAL.js
+* Frontend → React, Axios, Context API, MSAL.js
 
-Backend → Java, Spring Boot, Spring Security, Spring Data JPA, JWT
+* Backend → Java, Spring Boot, Spring Security, Spring Data JPA, JWT
 
-Database → MySQL
+* Database → MySQL
 
-Cloud → Azure Entra ID (OneDrive integration)
+* Cloud → Azure Entra ID (OneDrive integration)
 
-Tools → Git, GitHub, Maven, npm
+* Tools → Git, GitHub, Docker Maven, npm
 
 ### 📊 Power BI Integration
 
-Exported CSV files are automatically uploaded to OneDrive, enabling seamless integration with Power BI for visualization and reporting.
+* Exported CSV files are automatically uploaded to OneDrive, enabling seamless integration with Power BI for visualization and reporting.
 
 ### 📫 Contributing
 
-Contributions are welcome! Please open issues or pull requests.
+* Contributions are welcome! Please open issues or pull requests.
 
