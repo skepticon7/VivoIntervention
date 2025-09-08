@@ -37,7 +37,7 @@ public class AuthController {
     private final AuthService authService;
 
     @GetMapping("/profile")
-    @PreAuthorize("hasAnyRole('ROLE_SUPERUSER', 'ROLE_SUPERVISOR', 'ROLE_TECHNICIAN')")
+    @PreAuthorize("hasAnyRole('SCOPE_ROLE_SUPERUSER', 'SCOPE_ROLE_SUPERVISOR', 'SCOPE_ROLE_TECHNICIAN')")
     public ResponseEntity<?> authentication(Authentication authentication) {
         if (authentication == null) {
             return new ResponseEntity<>("No user is authenticated", HttpStatus.UNAUTHORIZED);

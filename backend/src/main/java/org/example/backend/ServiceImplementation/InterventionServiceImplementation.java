@@ -89,9 +89,6 @@ public class InterventionServiceImplementation implements InterventionService {
                                 "User to assign intervention to with ID " + assignedTo + " not found."
                         ));
 
-        if(userAssignedTo.getTechnicianStatus().equals(TechnicianStatus.ON_LEAVE))
-            throw new NotAvailableException(String.format("%s is on leave and not available for intervention assignment." , userAssignedTo.getFirstName().concat(" ").concat(userAssignedTo.getLastName())));
-
 
         Optional<Intervention> existingIntervention = interventionRepository.checkInterventionTime(userAssignedTo.getId() , newIntervention.getStartTime());
         if(existingIntervention.isPresent()) {
