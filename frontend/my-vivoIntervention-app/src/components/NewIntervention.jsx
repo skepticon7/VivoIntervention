@@ -91,7 +91,7 @@ const NewIntervention = ({ isOpen, onClose , isEdit , interventionId , viewOnly 
             if(role === "SUPERVISOR" || role === "SUPERUSER"){
                 setTechnicians(technicians);
             }
-            setSites(sites.filter((site) => site.siteStatus !== 'INACTIVE'));
+            setSites(sites);
             setInterventionTypes(interventionTypes);
         }).catch((error) => {
             setError(error?.response?.data?.error || "Failed to fetch necessary data")

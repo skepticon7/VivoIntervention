@@ -20,13 +20,11 @@ import {getInterventionTypes, getTechnicians, getTechniciansSupervisors} from ".
 import OverviewCard from "../shared/OverviewCard.jsx";
 import {getInitials} from "../Utils/getInitials.js";
 import axios from "axios";
-import {setIn} from "formik";
 import UserViewUpdate from "./UserViewUpdate.jsx";
-import {getTwoRandomElements} from "../Utils/getTwoRandoms.js";
 import {Input} from "@/components/ui/input.js";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select.js";
 const SearchBarFilter = ({filterOptions , setFilterOptions}) => {
-  const {searchTerm , sortType , selectedStatus} = filterOptions;
+  const {searchTerm  , selectedStatus} = filterOptions;
 
   const technicianStatus = [
     {value : "AVAILABLE" , label : "Available"},
@@ -110,7 +108,7 @@ const TechniciansOverview = ({technicians}) => {
   )
 }
 
-const TechnicianCard = ({technician , types ,role , onView , onEdit}) => {
+const TechnicianCard = ({technician  ,role , onView , onEdit}) => {
   const [actionsDropDown , setActionsDropDown] = useState(false);
   const dropDownRef = useRef();
 
@@ -119,10 +117,6 @@ const TechnicianCard = ({technician , types ,role , onView , onEdit}) => {
     'BUSY': 'bg-yellow-100 text-yellow-800 border-yellow-200',
     'ON_LEAVE': 'bg-red-100 text-red-800 border-red-200',
   }
-
-  const randomTypes = useMemo(() => {
-    return getTwoRandomElements(types);
-  }, [types]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -236,19 +230,6 @@ const TechnicianCard = ({technician , types ,role , onView , onEdit}) => {
               <p className='font-regular text-black text-sm'>{technician.email}</p>
             </div>
           </div>
-
-          {types.length !== 0 && (
-                <div className='flex flex-col items-start justify-start gap-2 mt-5'>
-                  <p className='font-regular text-black text-sm'>Specializations :</p>
-                  <div className='flex items-center justify-start gap-2'>
-                    {randomTypes.map((type) => (
-                        <div className='bg-green-800 text-white px-2 py-1 rounded-full text-xs font-semibold' key={type.id}>
-                          {type.name}
-                        </div>
-                    ))}
-                  </div>
-                </div>
-          )}
 
           <hr className='border-t-[1px] border-gray-300 w-full mt-5 mb-5'/>
 
@@ -431,7 +412,6 @@ const Technicians = () => {
                   <div className='grid grid-cols-3 gap-5 w-full'>
                     {filteredTechnicians.map((tech) => (
                         <TechnicianCard
-                            types={interventionTypes}
                             technician={tech}
                             role={role}
                             onView={() => handleOpenModal(tech.id, tech.role, true, false)}
