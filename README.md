@@ -14,84 +14,66 @@ The system is designed to **track, manage, and analyze IT interventions** across
 - ⚡ **React frontend** with caching for optimized performance
 - 🗄️ **Spring Boot backend** with layered architecture and REST APIs
 - 🛢️ **MySQL database** for reliable persistence
+- 🐳 Docker containerization for easy deployment
 
----
 
 
----
-
-## 🚀 Getting Started
-
-### ✅ Requirements
-
-- ☕ Java JDK 17+
-- 🐬 MySQL
-- 🟩 Node.js + npm
+## 🚀 Quick Start with Docker
+### ✅ Prerequisites
+- 🐳 Docker Engine (version 20.10.0+)
+- 🐳 Docker Compose (version 2.0.0+)
 - 🔑 Azure Entra ID credentials (Client ID, Secret, Tenant ID)
-- 🐙 Git
 
----
+### 📋 Setup Instructions
 
-### 📂 Cloning the Repository
+1 - Clone the repository
 
 ```bash
 git clone https://github.com/skepticon7/VivoIntervention.git
 cd VivoIntervention
 ```
 
+2 - Create environment file
 
----
-
-## ⚙️ Backend Setup
-
-### Configure Database
-- Create a MySQL database, e.g. `interventions_db`.
-
-### Application Secrets
-Create a file at `backend/src/main/resources/application-secrets.properties`:
-
+Create a .env file in the root directory (next to docker-compose.yml) with the following variables:
 ```properties
-spring.datasource.password=YOUR_DB_PASSWORD
-application.security.jwt.secretkey=YOUR_JWT_SECRET_KEY
-
-azure.client-id=YOUR_AZURE_CLIENT_ID
-azure.client-secret=YOUR_AZURE_CLIENT_SECRET
-azure.tenant-id=YOUR_AZURE_TENANT_ID
-``` 
-⚠️ Never commit this file to GitHub.
-
-Run Backend
-```bash
-cd backend
-./mvnw spring-boot:run
-```
-Backend runs at 👉 `http://localhost:8000`
-
-## 🌐 Frontend Setup
-### Install dependencies
-```bash
-cd frontend/my-vivoIntervention-app
-npm install
-```
-### Environment variables
-
-Create a .env file in `frontend/my-vivoIntervention-app/`:
-
-```properties
+MYSQL_DATABASE=vivo_interventiondb
+MYSQL_USER=mysql_user
+MYSQL_PASSWORD=mysql_password
+MYSQL_ROOT_PASSWORD=mysql_root_password
+DB_URL=jdbc:mysql://vivo-db:3306/vivo_interventiondb
+JWT_SECRET=your_jwt_secret_key_here
+AZURE_CLIENT_ID=your_azure_client_id_here
+AZURE_CLIENT_SECRET=your_azure_client_secret_here
+AZURE_TENANT_ID=your_azure_tenant_id_here
 VITE_API_BACKEND_SERVER=http://localhost:8000
-VITE_AZURE_CLIENT_ID=YOUR_AZURE_CLIENT_ID
+VITE_AZURE_CLIENT_ID=your_azure_client_id_here
 ```
 
-Start the frontend
+3 - Build and start containers
+
 ```bash
-npm run dev
+docker-compose up -d --build
+```
+4 - Wait for containers to start
+
+Check the status with:
+
+```bash
+docker-compose ps
 ```
 
-Frontend runs at 👉 `http://localhost:5173`
+All containers should show "Up" status.
 
-## 🧑‍💻 Usage
+5 - Access the application
 
-Create a Superuser (first login)
+Frontend: `http://localhost:80`
+
+Backend API: `http://localhost:8000`
+
+6 - Create initial Superuser
+Once all containers are running, create the first superuser:
+
 ```bash
 curl -X POST \
   'http://localhost:8000/api/auth/createSuperuser' \
@@ -108,15 +90,23 @@ curl -X POST \
   }'
 ```
 
-Login
+### 🐳 Docker Architecture
+The system uses Docker Compose with three services:
 
-Use the created Superuser credentials in the frontend.
+vivo-db: MySQL 8.0 database with persistent storage
 
-Manage data
+vivo-backend: Spring Boot application with JWT authentication
 
-Add interventions, sites, and users based on role permissions.
+vivo-frontend: React application with Vite build system
 
-Export data securely to OneDrive for Power BI visualization.
+### 🔐 Environment Variables Explained
+Database variables: Configure MySQL connection and credentials
+
+JWT_SECRET: Secret key for signing authentication tokens
+
+Azure variables: For OneDrive integration and Power BI exports
+
+VITE_ variables: Frontend environment variables for API connection
 
 ### 🔐 Roles & Permissions
 
