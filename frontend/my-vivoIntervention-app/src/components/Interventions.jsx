@@ -468,11 +468,7 @@ const Interventions = () => {
   const [stats , setStats] = useState([]);
   const [sites , setSites] = useState([])
   const [selectedPage, setSelectedPage] = useState(0)
-  const [cachedInterventions, setCachedInterventions] = useState({
-    data: {},
-    timestamps: {},
-    maxAge: 3 * 60 * 1000 // 3 minutes
-  });
+
   const [modalState, setModalState] = useState({
     interventionId: null,
     isOpen: false,
@@ -492,6 +488,12 @@ const Interventions = () => {
   const handleCloseModal = () => {
     setModalState(prev => ({...prev, isOpen: false}))
   }
+
+  const [cachedInterventions, setCachedInterventions] = useState({
+    data: {},
+    timestamps: {},
+    maxAge: 3 * 60 * 1000 // 3 minutes
+  });
 
   const getSanitizedFilters = (filters) => {
     const {page , size , ...cleanFilters} = filters;
@@ -516,13 +518,11 @@ const Interventions = () => {
         setStats(statsResponse.data)
         return;
       }
-
       const params = {
         ...getSanitizedFilters(filters),
         page,
         size : 5
       }
-
       setLoading(true);
       const [interventionsResponse , statsResponse , sitesResponse] = await axios.all([
           getInterventions(params , user?.id , role) , getInterventionsStats(role , user?.id) , getSites()
@@ -542,7 +542,6 @@ const Interventions = () => {
       setStats(statsResponse.data);
       setInterventions(interventionsResponse.data.content);
       setSites(sitesResponse.data);
-
     } catch (e) {
       setError(e.response?.data?.message || "Internal Server Error");
     } finally {
