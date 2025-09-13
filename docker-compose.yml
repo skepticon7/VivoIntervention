@@ -1,0 +1,45 @@
+services:
+  vivo-db:
+    image: mysql:8.0
+    container_name: vivo-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+
+  vivo-backend:
+    container_name: vivo-backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    depends_on:
+      - vivo-db
+    ports:
+      - "8000:8000"
+    expose:
+      - "8000"
+
+  vivo-frontend:
+    build:
+      context: ./frontend/my-vivoIntervention-app
+      dockerfile: Dockerfile
+      args:
+        - VITE_API_BACKEND_SERVER=${VITE_API_BACKEND_SERVER}
+        - VITE_AZURE_CLIENT_ID=${AZURE_CLIENT_ID}
+    container_name: vivo-frontend
+    depends_on:
+      - vivo-backend
+    ports:
+      - "80:80"
+    expose:
+      - "80"
+volumes:
+  mysql_data:
+

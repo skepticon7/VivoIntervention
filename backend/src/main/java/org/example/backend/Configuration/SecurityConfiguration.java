@@ -56,7 +56,6 @@ public class SecurityConfiguration {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
     UserDetailsService userDetailsService(UserServiceDetailsImplementation userServiceDetailsImplementation){
         return userServiceDetailsImplementation;
     }
